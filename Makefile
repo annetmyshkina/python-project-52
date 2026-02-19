@@ -12,7 +12,7 @@ build:
 	./build.sh
 
 render-start:
-	gunicorn task_manager.wsgi
+	gunicorn task_manager.wsgi:application
 
 check:
 	uv run ruff check task_manager
