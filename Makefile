@@ -13,3 +13,9 @@ build:
 
 render-start:
 	gunicorn task_manager.wsgi
+
+check:
+	uv run ruff check task_manager
+
+fix:
+	uv run ruff check --fix .
