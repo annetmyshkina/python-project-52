@@ -39,5 +39,10 @@ quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
 
+exclude = [
+    "migrations/",
+    "task_manager/settings.py",
+]
+
 [dependency-groups]
 dev = ["ruff>=0.14.14"]
