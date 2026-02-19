@@ -1,0 +1,48 @@
+# Byte-code
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Виртуальное окружение (uv)
+.venv/
+venv/
+env/
+
+# Окружение
+.env
+.env.local
+.env.*.local
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Django media/user uploads
+media/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Системные
+.DS_Store
+Thumbs.db
+
+# uv lockfile (опционально, если делите с командой)
+# uv.lock
+
+# Тесты/покрытие
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# Сборки/дистрибутивы
+build/
+dist/
+*.egg-info/
