@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block jumbotron %}
+<div class="p-5 mb-4 bg-primary text-white rounded-3">
+    <div class="container py-5">
+        <h1 class="display-4 fw-bold">{% trans "Welcome to Task Manager" %}</h1>
+        <p class="lead">{% trans "Organize your tasks, boost your productivity, achieve your goals." %}</p>
+        <hr class="my-4 bg-white">
+        {% if not user.is_authenticated %}
+            <a class="btn btn-light btn-lg" href="{% url 'register' %}" role="button">{% trans "Sign up now" %}</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <h5 class="card-title">{% trans "Create Tasks" %}</h5>
+                <p class="card-text">{% trans "Easily create and organize your tasks with our intuitive interface." %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <h5 class="card-title">{% trans "Track Progress" %}</h5>
+                <p class="card-text">{% trans "Monitor your progress and stay motivated with visual indicators." %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <h5 class="card-title">{% trans "Work in a team" %}</h5>
+                <p class="card-text">{% trans "Work together with your team and share tasks efficiently." %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
