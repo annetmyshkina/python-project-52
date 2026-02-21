@@ -21,6 +21,11 @@ db.sqlite3-journal
 
 # Django media/user uploads
 media/
+/media/
+
+# Django static files
+staticfiles/
+/staticfiles/
 
 # IDE
 .vscode/
