@@ -53,7 +53,6 @@ class UserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def form_valid(self, form):
         messages.success(self.request, "The user has been successfully deleted!")
-        self.object.delete()
         logout(self.request)
         return super().form_valid(form)
 
@@ -62,4 +61,5 @@ class UsersView(ListView):
     model = User
     template_name = "users/users_list.html"
     context_object_name = "users"
+    ordering = ["username"]
     paginate_by = 10
