@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load django_bootstrap5 %}
+
+{% block title %}{% trans "Users" %} - {% trans "Task Manager" %}{% endblock %}
+
+{% block jumbotron %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-lg-10">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h2>{% trans "Users" %}</h2>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr style="background-color: #0d6efd !important;">
+                        <th style="background-color: #0d6efd !important; color: white !important;">ID</th>
+                        <th style="background-color: #0d6efd !important; color: white !important;">{% trans "First name" %}</th>
+                        <th style="background-color: #0d6efd !important; color: white !important;">{% trans "Last name" %}</th>
+                        <th style="background-color: #0d6efd !important; color: white !important;">{% trans "Username" %}</th>
+                        <th style="background-color: #0d6efd !important; color: white !important;">{% trans "Joined" %}</th>
+                        <th style="background-color: #0d6efd !important; color: white !important;">{% trans "Actions" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td><strong>{{ user.pk }}</strong></td>
+                        <td>{{ user.first_name|default:"—" }}</td>
+                        <td>{{ user.last_name|default:"—" }}</td>
+                        <td>
+                            {% if user == request.user %}
+                                <span class="badge bg-secondary text-white">{% trans "You" %}</span>
+                            {% endif %}
+                            {{ user.username }}
+                        </td>
+                        <td>{{ user.date_joined|date:"d.m.Y" }}</td>
+                        <td>
+                            {% if user == request.user %}
+                                <div class="btn-group" role="group">
+                                    <a href="{% url 'user_update' user.pk %}"
+                                       class="btn btn-outline-dark btn-sm">
+                                        <i class="bi bi-pencil me-1"></i>{% trans "Edit" %}
+                                    </a>
+                                    <a href="{% url 'user_delete' user.pk %}"
+                                       class="btn btn-outline-danger btn-sm">
+                                        <i class="bi bi-trash me-1"></i>{% trans "Delete" %}
+                                    </a>
+                                </div>
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5">
+                            <i class="bi bi-people display-1 text-muted"></i>
+                            <p class="text-muted mt-3">{% trans "No users found" %}</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

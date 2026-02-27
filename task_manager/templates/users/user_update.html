@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 i18n %}
+
+{% block title %}{% trans "Edit profile" %} - {% trans "Task Manager" %}{% endblock %}
+
+{% block jumbotron %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">  <!-- ← ИСПРАВЛЕНО -->
+                <h3 class="mb-0">{% trans "Edit profile" %}</h3>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-4">
+                    <i class="bi bi-person-circle"></i>
+                    {% trans "Editing profile for" %} <strong>{{ object.username }}</strong>
+                </p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form form layout='default' %}
+
+                    <div class="mt-4 d-flex gap-2 justify-content-end">
+                        <a href="{% url 'users' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left me-1"></i>{% trans "Cancel" %}
+                        </a>
+                        {% bootstrap_button button_type="submit" content=_("Save changes") extra_classes="btn btn-primary" %}  <!-- ← btn-primary -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
