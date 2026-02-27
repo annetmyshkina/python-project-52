@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Task Manager 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-21 12:00+0000\n"
+"POT-Creation-Date: 2026-02-26 15:15+0000\n"
 "PO-Revision-Date: 2026-02-21 12:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Russian <ru@example.com>\n"
@@ -14,30 +14,48 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: task_manager/templates/base.html:8 task_manager/templates/base.html:17
-#: task_manager/templates/base.html:82
+#: task_manager/templates/base.html:7 task_manager/templates/base.html:15
+#: task_manager/templates/base.html:97 task_manager/templates/login.html:4
+#: task_manager/templates/logout.html:4
+#: task_manager/templates/users/user_create.html:4
+#: task_manager/templates/users/user_delete.html:4
+#: task_manager/templates/users/user_update.html:4
+#: task_manager/templates/users/users_list.html:5
 msgid "Task Manager"
 msgstr "Менеджер задач"
 
-#: task_manager/templates/base.html:25
+#: task_manager/templates/base.html:24
+#: task_manager/templates/users/users_list.html:5
+#: task_manager/templates/users/users_list.html:13
 msgid "Users"
 msgstr "Пользователи"
 
-#: task_manager/templates/base.html:62
+#: task_manager/templates/base.html:63
+#: task_manager/templates/users/user_update.html:4
+#: task_manager/templates/users/user_update.html:13
+msgid "Edit profile"
+msgstr "Редактировать профиль"
+
+#: task_manager/templates/base.html:70 task_manager/templates/logout.html:4
 msgid "Logout"
 msgstr "Выход"
 
-#: task_manager/templates/base.html:67
+#: task_manager/templates/base.html:79 task_manager/templates/login.html:4
+#: task_manager/templates/login.html:13 task_manager/templates/login.html:19
+#: task_manager/templates/users/user_create.html:24
 msgid "Sign in"
 msgstr "Вход"
 
-#: task_manager/templates/base.html:70
+#: task_manager/templates/base.html:84
+#: task_manager/templates/users/user_create.html:4
+#: task_manager/templates/users/user_create.html:13
 msgid "Registration"
 msgstr "Регистрация"
 
-#: task_manager/templates/base.html:84
+#: task_manager/templates/base.html:99
 msgid ""
 "\n"
 "                        A simple task manager to help you organize your work "
@@ -45,14 +63,15 @@ msgid ""
 "                    "
 msgstr ""
 "\n"
-"                        Простой менеджер задач, который поможет вам организовать вашу работу "
-"и повысить производительность труда.\n"
+"                        Простой менеджер задач, который поможет вам "
+"организовать вашу работу и повысить производительность труда.\n"
 "                    "
-#: task_manager/templates/base.html:88
+
+#: task_manager/templates/base.html:103
 msgid "Get started"
 msgstr "Начать"
 
-#: task_manager/templates/base.html:101
+#: task_manager/templates/base.html:115
 msgid "Task Manager. All rights reserved."
 msgstr "Менеджер задач. Все права защищены."
 
@@ -62,32 +81,192 @@ msgstr "Добро пожаловать в менеджер задач"
 
 #: task_manager/templates/home.html:8
 msgid "Organize your tasks, boost your productivity, achieve your goals."
-msgstr "Организуйте свои задачи, повысьте свою производительность, достигните своих целей."
+msgstr ""
+"Организуйте свои задачи, повысьте свою производительность, достигните своих "
+"целей."
 
-#: task_manager/templates/home.html:12
+#: task_manager/templates/home.html:11
 msgid "Sign up now"
 msgstr "Зарегистрируйтесь прямо сейчас"
 
-#: task_manager/templates/home.html:23
+#: task_manager/templates/home.html:22
 msgid "Create Tasks"
 msgstr "Создать задачу"
 
-#: task_manager/templates/home.html:24
+#: task_manager/templates/home.html:23
 msgid "Easily create and organize your tasks with our intuitive interface."
-msgstr "Легко создавайте и упорядочивайте свои задачи с помощью понятного интерфейса."
+msgstr ""
+"Легко создавайте и упорядочивайте свои задачи с помощью понятного интерфейса."
 
-#: task_manager/templates/home.html:31
+#: task_manager/templates/home.html:30
 msgid "Track Progress"
 msgstr "Отслеживать прогресс"
 
-#: task_manager/templates/home.html:32
+#: task_manager/templates/home.html:31
 msgid "Monitor your progress and stay motivated with visual indicators."
-msgstr "Следите за своим прогрессом и поддерживайте мотивацию с помощью визуальных индикаторов."
+msgstr ""
+"Следите за своим прогрессом и поддерживайте мотивацию с помощью визуальных "
+"индикаторов."
 
-#: task_manager/templates/home.html:39
+#: task_manager/templates/home.html:38
 msgid "Work in a team"
 msgstr "Работать в команде"
 
-#: task_manager/templates/home.html:40
+#: task_manager/templates/home.html:39
 msgid "Work together with your team and share tasks efficiently."
 msgstr "Работайте вместе со своей командой и эффективно распределяйте задачи."
+
+#: task_manager/templates/login.html:22
+msgid "No account?"
+msgstr "Нет аккаунта?"
+
+#: task_manager/templates/login.html:23
+#: task_manager/templates/users/user_create.html:19
+#, fuzzy
+#| msgid "Registration"
+msgid "Register"
+msgstr "Регистрация"
+
+#: task_manager/templates/logout.html:13
+#, fuzzy
+#| msgid "Sign in"
+msgid "Sign out"
+msgstr "Выход"
+
+#: task_manager/templates/logout.html:18
+msgid "Are you sure you want to log out?"
+msgstr "Вы уверены, что хотите выйти из системы?"
+
+#: task_manager/templates/logout.html:19
+msgid "You will need to sign in again to access your tasks."
+msgstr ""
+"Вам нужно будет снова войти в систему, чтобы получить доступ к своим задачам."
+
+#: task_manager/templates/logout.html:24
+msgid "Stay signed in"
+msgstr "Оставайтесь в системе"
+
+#: task_manager/templates/users/user_create.html:23
+msgid "Already have an account?"
+msgstr "У вас уже есть учетная запись?"
+
+#: task_manager/templates/users/user_delete.html:4
+#: task_manager/templates/users/user_delete.html:13
+msgid "Delete user"
+msgstr "Удалить пользователя"
+
+#: task_manager/templates/users/user_delete.html:18
+msgid "Are you sure you want to delete this user?"
+msgstr "Вы уверены, что хотите удалить этого пользователя?"
+
+#: task_manager/templates/users/user_delete.html:31
+msgid "Yes, I'm sure I want to delete this user"
+msgstr "Да, я уверен(a), что хочу удалить этого пользователя"
+
+#: task_manager/templates/users/user_delete.html:37
+#: task_manager/templates/users/users_list.html:50
+msgid "Delete"
+msgstr "Удалить"
+
+#: task_manager/templates/users/user_delete.html:40
+#: task_manager/templates/users/user_update.html:27
+msgid "Cancel"
+msgstr "Отмена"
+
+#: task_manager/templates/users/user_update.html:18
+msgid "Editing profile for"
+msgstr "Редактирование профиля для"
+
+#: task_manager/templates/users/user_update.html:29
+msgid "Save changes"
+msgstr "Сохранить изменения"
+
+#: task_manager/templates/users/users_list.html:21 users/forms.py:13
+msgid "First name"
+msgstr "Имя"
+
+#: task_manager/templates/users/users_list.html:22 users/forms.py:22
+msgid "Last name"
+msgstr "Фамилия"
+
+#: task_manager/templates/users/users_list.html:23 users/forms.py:31
+#, fuzzy
+#| msgid "Users"
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: task_manager/templates/users/users_list.html:24
+msgid "Joined"
+msgstr "Присоединился"
+
+#: task_manager/templates/users/users_list.html:25
+msgid "Actions"
+msgstr "Действия"
+
+#: task_manager/templates/users/users_list.html:36
+msgid "You"
+msgstr "Вы"
+
+#: task_manager/templates/users/users_list.html:46
+msgid "Edit"
+msgstr "Редактировать"
+
+#: task_manager/templates/users/users_list.html:62
+msgid "No users found"
+msgstr "Пользователи не найдены"
+
+#: users/forms.py:15
+msgid "Enter your first name"
+msgstr "Введите свое имя"
+
+#: users/forms.py:24
+msgid "Enter your last name"
+msgstr "Введите свою фамилию"
+
+#: users/forms.py:32
+msgid "Invalid characters"
+msgstr "Недопустимые символы"
+
+#: users/forms.py:34
+msgid "Enter username"
+msgstr "Введите имя пользователя"
+
+#: users/forms.py:36
+msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr "Длина не более 150 символов. Только буквы, цифры и @/./+/-/_."
+
+#: users/forms.py:51
+msgid "Username already taken."
+msgstr "Имя пользователя уже занято."
+
+#: users/forms.py:65
+msgid "Password"
+msgstr "Пароль"
+
+#: users/forms.py:66
+msgid "Your password must contain at least 8 characters."
+msgstr "Ваш пароль должен содержать не менее 8 символов."
+
+#: users/forms.py:68
+msgid "Confirm password"
+msgstr "Подтвердите пароль"
+
+#: users/forms.py:69
+msgid "Please enter the password again to confirm."
+msgstr "Пожалуйста, введите пароль еще раз для подтверждения."
+
+#: users/forms.py:83
+msgid "I confirm this action is irreversible"
+msgstr "Я подтверждаю, что это действие необратимо"
+
+#~ msgid "Delete account"
+#~ msgstr "Удалить аккаунт"
+
+#~ msgid "Are you sure?"
+#~ msgstr "Вы уверены?"
+
+#~ msgid ""
+#~ "This action cannot be undone. This will permanently delete your account:"
+#~ msgstr ""
+#~ "Это действие невозможно отменить. В результате ваша учетная запись будет "
+#~ "удалена безвозвратно:"
