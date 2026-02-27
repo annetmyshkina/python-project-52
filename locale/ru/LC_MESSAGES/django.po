@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Task Manager 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-26 15:15+0000\n"
+"POT-Creation-Date: 2026-02-27 09:37+0000\n"
 "PO-Revision-Date: 2026-02-21 12:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Russian <ru@example.com>\n"
@@ -122,14 +122,10 @@ msgstr "Нет аккаунта?"
 
 #: task_manager/templates/login.html:23
 #: task_manager/templates/users/user_create.html:19
-#, fuzzy
-#| msgid "Registration"
 msgid "Register"
-msgstr "Регистрация"
+msgstr "Зарегистрироваться"
 
 #: task_manager/templates/logout.html:13
-#, fuzzy
-#| msgid "Sign in"
 msgid "Sign out"
 msgstr "Выход"
 
@@ -181,17 +177,15 @@ msgstr "Редактирование профиля для"
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
-#: task_manager/templates/users/users_list.html:21 users/forms.py:13
+#: task_manager/templates/users/users_list.html:21 users/forms.py:14
 msgid "First name"
 msgstr "Имя"
 
-#: task_manager/templates/users/users_list.html:22 users/forms.py:22
+#: task_manager/templates/users/users_list.html:22 users/forms.py:23
 msgid "Last name"
 msgstr "Фамилия"
 
-#: task_manager/templates/users/users_list.html:23 users/forms.py:31
-#, fuzzy
-#| msgid "Users"
+#: task_manager/templates/users/users_list.html:23 users/forms.py:32
 msgid "Username"
 msgstr "Имя пользователя"
 
@@ -215,47 +209,47 @@ msgstr "Редактировать"
 msgid "No users found"
 msgstr "Пользователи не найдены"
 
-#: users/forms.py:15
+#: users/forms.py:16
 msgid "Enter your first name"
 msgstr "Введите свое имя"
 
-#: users/forms.py:24
+#: users/forms.py:25
 msgid "Enter your last name"
 msgstr "Введите свою фамилию"
 
-#: users/forms.py:32
+#: users/forms.py:33
 msgid "Invalid characters"
 msgstr "Недопустимые символы"
 
-#: users/forms.py:34
+#: users/forms.py:35
 msgid "Enter username"
 msgstr "Введите имя пользователя"
 
-#: users/forms.py:36
+#: users/forms.py:37
 msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr "Длина не более 150 символов. Только буквы, цифры и @/./+/-/_."
 
-#: users/forms.py:51
+#: users/forms.py:52
 msgid "Username already taken."
 msgstr "Имя пользователя уже занято."
 
-#: users/forms.py:65
+#: users/forms.py:66
 msgid "Password"
 msgstr "Пароль"
 
-#: users/forms.py:66
+#: users/forms.py:67
 msgid "Your password must contain at least 8 characters."
 msgstr "Ваш пароль должен содержать не менее 8 символов."
 
-#: users/forms.py:68
+#: users/forms.py:69
 msgid "Confirm password"
 msgstr "Подтвердите пароль"
 
-#: users/forms.py:69
+#: users/forms.py:70
 msgid "Please enter the password again to confirm."
 msgstr "Пожалуйста, введите пароль еще раз для подтверждения."
 
-#: users/forms.py:83
+#: users/forms.py:84
 msgid "I confirm this action is irreversible"
 msgstr "Я подтверждаю, что это действие необратимо"
 
