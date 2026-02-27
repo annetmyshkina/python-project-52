@@ -2,13 +2,13 @@
 {% load i18n %}
 
 {% block jumbotron %}
-<div class="p-5 mb-4 bg-primary text-white rounded-3">
+<div class="p-5 mb-4 mt-4 bg-primary text-white rounded-3">
     <div class="container py-5">
         <h1 class="display-4 fw-bold">{% trans "Welcome to Task Manager" %}</h1>
         <p class="lead">{% trans "Organize your tasks, boost your productivity, achieve your goals." %}</p>
         <hr class="my-4 bg-white">
         {% if not user.is_authenticated %}
-            <a class="btn btn-light btn-lg" href="{% url 'register' %}" role="button">{% trans "Sign up now" %}</a>
+            <a class="btn btn-light btn-lg" href="{% url 'user_create' %}" role="button">{% trans "Sign up now" %}</a>
         {% endif %}
     </div>
 </div>
