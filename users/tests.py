@@ -56,6 +56,6 @@ class UsersCRUDTest(TestCase):
         user1_pk = self.user1.pk
         url = reverse("user_delete", kwargs={"pk": user1_pk})
         response = self.client.post(url, {"confirm": True}, follow=True)
-        self.assertRedirects(response, reverse("users"))
+        self.assertRedirects(response, reverse("home"))
         self.assertFalse(User.objects.filter(pk=user1_pk).exists())
 
