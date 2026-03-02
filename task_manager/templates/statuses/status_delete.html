@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 i18n %}
+
+{% block title %}{% trans "Delete status" %} - {% trans "Task Manager" %}{% endblock %}
+
+{% block jumbotron %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card border-danger shadow">
+            <div class="card-header bg-danger text-white">
+                <h3 class="mb-0">{% trans "Delete status" %}</h3>
+            </div>
+            <div class="card-body">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    {% trans "Are you sure you want to delete status" %}
+                    <strong> "{{ object.name }}"</strong>?
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+
+                    <div class="d-flex gap-2 justify-content-end mt-4">
+                        <a href="{% url 'statuses' %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle me-1"></i>{% trans "Cancel" %}
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash me-1"></i>{% trans "Yes, delete" %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
