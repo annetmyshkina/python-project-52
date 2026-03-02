@@ -5,21 +5,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from django.views.generic import DeleteView, UpdateView
-from django.views.generic.edit import CreateView
-from django.views.generic.list import ListView
-
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .forms import CustomUserChangeForm, CustomUserCreationForm, UserDeleteForm
+from django.utils.translation import gettext_lazy as _
 
 
 class UserCreateView(SuccessMessageMixin, CreateView):
     form_class = CustomUserCreationForm
     template_name = "users/user_create.html"
     success_url = reverse_lazy("login")
+    success_message = _('User successfully registered!')
 
-    def form_valid(self, form):
-        messages.success(self.request, "User successfully registered!")
-        return super().form_valid(form)
 
 
 class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -27,14 +23,10 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     form_class = CustomUserChangeForm
     template_name = "users/user_update.html"
     success_url = reverse_lazy("users")
+    success_message = _('User successfully updated!')
 
     def test_func(self):
         return self.get_object() == self.request.user
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs["instance"] = self.object
-        return kwargs
 
 
 class UserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -46,13 +38,14 @@ class UserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         return self.get_object() == self.request.user
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs["instance"] = self.object
-        return kwargs
-
     def form_valid(self, form):
-        messages.success(self.request, "The user has been successfully deleted!")
+        user = self.get_object()
+        messages.success(
+            self.request,
+            _('User "%(username)s" has been successfully deleted!') % {
+                'username': user.username
+            }
+        )
         logout(self.request)
         return super().form_valid(form)
 
