@@ -9,7 +9,7 @@
 <div class="row justify-content-center mt-5">
     <div class="col-md-6">
         <div class="card shadow">
-            <div class="card-header bg-primary text-white">  <!-- ← ИСПРАВЛЕНО -->
+            <div class="card-header bg-primary text-white">
                 <h3 class="mb-0">{% trans "Edit profile" %}</h3>
             </div>
             <div class="card-body">
@@ -26,7 +26,7 @@
                         <a href="{% url 'users' %}" class="btn btn-secondary">
                             <i class="bi bi-arrow-left me-1"></i>{% trans "Cancel" %}
                         </a>
-                        {% bootstrap_button button_type="submit" content=_("Save changes") extra_classes="btn btn-primary" %}  <!-- ← btn-primary -->
+                        {% bootstrap_button button_type="submit" content=_("Save changes") extra_classes="btn btn-primary" %}
                     </div>
                 </form>
             </div>
