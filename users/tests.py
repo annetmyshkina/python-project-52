@@ -9,9 +9,6 @@ User = get_user_model()
 class UsersCRUDTest(TestCase):
     fixtures = ["test_users.json"]
 
-    def setUp(self):
-        self.user = User.objects.create(name="John", email="john@example.com")
-
     @classmethod
     def setUpTestData(cls):
         cls.client = Client()
@@ -35,7 +32,7 @@ class UsersCRUDTest(TestCase):
         self.assertTrue(User.objects.filter(username="newuser123").exists())
         self.assertRedirects(response, reverse("login"))
 
-    def test_update_annette_profile_success(self):
+    def test_update_user_profile_success(self):
         url = reverse("user_update", kwargs={"pk": self.user1.pk})
         response = self.client.post(url, {
             "first_name": "Обновленный",
@@ -48,13 +45,17 @@ class UsersCRUDTest(TestCase):
         self.assertEqual(self.user1.username, "user_updated")
         self.assertRedirects(response, reverse("users"))
 
-    def test_superuser_cannot_update_annette(self):
+    def test_superuser_cannot_update_user(self):
+        self.client.logout()
         self.client.force_login(self.user2)
         url = reverse("user_update", kwargs={"pk": self.user1.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 403)
 
-    def test_annette_delete_own_account(self):
-        url = reverse("user_delete", kwargs={"pk": self.user1.pk})
+    def test_user_delete_own_account(self):
+        user1_pk = self.user1.pk
+        url = reverse("user_delete", kwargs={"pk": user1_pk})
         response = self.client.post(url, {"confirm": True}, follow=True)
-        self.assertFalse(User.objects.filter(pk=self.user1.pk).exists())
+        self.assertRedirects(response, reverse("users"))
+        self.assertFalse(User.objects.filter(pk=user1_pk).exists())
+
