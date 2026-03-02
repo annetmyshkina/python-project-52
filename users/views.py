@@ -18,7 +18,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
 
 
 
-class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class UserUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = User
     form_class = CustomUserChangeForm
     template_name = "users/user_update.html"
