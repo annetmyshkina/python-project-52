@@ -32,6 +32,8 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("statuses")
 
     def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
         if self.object.tasks.exists():
             count = self.object.tasks.count()
             messages.error(
