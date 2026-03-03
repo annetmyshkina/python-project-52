@@ -19,7 +19,9 @@
     <div class="col-md-4">
         <div class="card mb-4">
             <div class="card-body text-center">
-                <h5 class="card-title">{% trans "Create Tasks" %}</h5>
+                <a href="{% url 'task_create' %}" class="card-title-link">
+                    <h5 class="card-title">{% trans "Create Tasks" %}</h5>
+                </a>
                 <p class="card-text">{% trans "Easily create and organize your tasks with our intuitive interface." %}</p>
             </div>
         </div>
@@ -27,7 +29,9 @@
     <div class="col-md-4">
         <div class="card mb-4">
             <div class="card-body text-center">
-                <h5 class="card-title">{% trans "Track Progress" %}</h5>
+                <a href="{% url 'tasks' %}" class="card-title-link">
+                    <h5 class="card-title">{% trans "Track Progress" %}</h5>
+                </a>
                 <p class="card-text">{% trans "Monitor your progress and stay motivated with visual indicators." %}</p>
             </div>
         </div>
@@ -41,4 +45,16 @@
         </div>
     </div>
 </div>
+
+<style>
+.card-title-link {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+}
+.card-title-link:hover h5 {
+    color: #0d6efd !important;
+}
+</style>
 {% endblock %}
+
