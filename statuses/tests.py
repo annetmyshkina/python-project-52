@@ -21,17 +21,17 @@ class StatusCRUDTest(TestCase):
 
     def test_urls_resolve_and_return_ok(self):
         urls = [
-            ('statuses', 'statuses/statuses_list.html'),
-            ('status_create', 'statuses/status_create.html'),
+            ('statuses', 'statuses/statuses_list.html', None),
+            ('status_create', 'statuses/status_create.html', None),
             ('status_update', 'statuses/status_update.html', self.status.pk),
             ('status_delete', 'statuses/status_delete.html', self.status.pk)
         ]
 
         for url_name, template, pk in urls:
-            if pk:
-                url = reverse(url_name, kwargs={'pk': pk})
-            else:
+            if pk is None:
                 url = reverse(url_name)
+            else:
+                url = reverse(url_name, kwargs={'pk': pk})
 
             with self.subTest(url_name=url_name):
                 response = self.client.get(url)
