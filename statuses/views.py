@@ -43,12 +43,11 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
             )
             return redirect('statuses')
 
-        self.object.delete()
         messages.success(
             request,
             _('Status "%(name)s" deleted successfully') % {'name': self.object.name}
         )
-        return redirect('statuses')
+        return self.delete(request, *args, **kwargs)
 
 
 class StatusesView(LoginRequiredMixin, ListView):
