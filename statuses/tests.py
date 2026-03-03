@@ -94,7 +94,7 @@ class StatusCRUDTest(TestCase):
 
         messages = list(response.context['messages'])
         self.assertTrue(
-            any('Cannot delete status' in str(m) for m in messages)
+            any('Cannot delete status' in str(m.message) for m in messages)
         )
 
 
