@@ -4,7 +4,6 @@ from django.utils.translation import gettext_lazy as _
 class Statuses(models.Model):
     name = models.CharField(
         max_length=30,
-        unique=True,
         verbose_name=_('Name')
     )
     created_at = models.DateTimeField(
@@ -23,11 +22,5 @@ class Statuses(models.Model):
 
     def __str__(self):
         return self.name
-
-    def has_related_tasks(self):
-        return self.task_set.exists()
-
-    def tasks_count(self):
-        return self.tasks.count()
 
 
