@@ -36,7 +36,7 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
 
         if self.object.tasks.exists():
             count = self.object.tasks.count()
-            messages.error(
+            messages.warning(
                 request,
                 _('Cannot delete status "%(name)s". It is used in %(count)d tasks.') % {
                     'name': self.object.name,
