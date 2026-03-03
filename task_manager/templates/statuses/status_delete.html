@@ -13,15 +13,6 @@
                 <h3 class="mb-0">{% trans "Delete status" %}</h3>
             </div>
             <div class="card-body">
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
-                            {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                    {% endfor %}
-                {% endif %}
-
                 <div class="alert alert-warning">
                     <i class="bi bi-exclamation-triangle-fill me-2"></i>
                     {% trans "Are you sure you want to delete status" %}
@@ -46,3 +37,4 @@
     </div>
 </div>
 {% endblock %}
+
