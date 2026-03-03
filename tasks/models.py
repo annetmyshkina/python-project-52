@@ -16,6 +16,7 @@ class Tasks(models.Model):
     status = models.ForeignKey(
         'statuses.Statuses',
         on_delete=models.PROTECT,
+        related_name='tasks',
         verbose_name=_('Status')
     )
 
