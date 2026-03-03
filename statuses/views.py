@@ -15,6 +15,7 @@ class StatusCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = StatusForm
     template_name = "statuses/status_create.html"
     success_url = reverse_lazy("statuses")
+    success_message = _('Status successfully created')
 
 
 class StatusUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
@@ -31,8 +32,6 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("statuses")
 
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-
         if self.object.tasks.exists():
             count = self.object.tasks.count()
             messages.error(
