@@ -19,7 +19,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr style="background-color: #0d6efd !important;">
-                        <th style="background-color: #0d6efd !important; color: white !important;">ID</th>
+                        <th style="background-color: #0d6efd !important; color: white !important;">{% trans "#" %}</th>
                         <th style="background-color: #0d6efd !important; color: white !important;">{% trans "Name" %}</th>
                         <th style="background-color: #0d6efd !important; color: white !important;">{% trans "Created at" %}</th>
                         <th style="background-color: #0d6efd !important; color: white !important;">{% trans "Actions" %}</th>
@@ -28,7 +28,7 @@
                 <tbody>
                     {% for status in statuses %}
                     <tr>
-                        <td><strong>{{ status.pk }}</strong></td>
+                        <th scope="row">{{ forloop.counter }}</th>
                         <td>{{ status.name|default:"—" }}</td>
                         <td>{{ status.created_at|date:"d.m.Y H:i"|default:"—" }}</td>
                         <td>
@@ -67,4 +67,5 @@
     </div>
 </div>
 {% endblock %}
+
 
