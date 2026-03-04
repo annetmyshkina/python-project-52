@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.core.exceptions import ValidationError
 
 class Labels(models.Model):
     name = models.CharField(
@@ -31,3 +30,6 @@ class Labels(models.Model):
         verbose_name = _('Label')
         verbose_name_plural = _('Labels')
         ordering = ['name']
+
+    def __str__(self):
+        return self.name
