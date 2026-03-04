@@ -8,23 +8,23 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('tasks', '0001_initial'),
+        ("tasks", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Labels',
+            name="Labels",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=30, unique=True, verbose_name='Name')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Created at')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Updated at')),
-                ('tasks', models.ManyToManyField(blank=True, related_name='labels', to='tasks.tasks', verbose_name='Tasks')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("name", models.CharField(max_length=30, unique=True, verbose_name="Name")),
+                ("created_at", models.DateTimeField(auto_now_add=True, verbose_name="Created at")),
+                ("updated_at", models.DateTimeField(auto_now=True, verbose_name="Updated at")),
+                ("tasks", models.ManyToManyField(blank=True, related_name="labels", to="tasks.tasks", verbose_name="Tasks")),
             ],
             options={
-                'verbose_name': 'Label',
-                'verbose_name_plural': 'Labels',
-                'ordering': ['name'],
+                "verbose_name": "Label",
+                "verbose_name_plural": "Labels",
+                "ordering": ["name"],
             },
         ),
     ]

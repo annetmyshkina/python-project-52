@@ -1,13 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+
 from .forms import LabelForm
 from .models import Labels
-from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.utils.translation import gettext_lazy as _
-
 
 
 class LabelCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -15,7 +15,7 @@ class LabelCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = LabelForm
     template_name = "labels/label_create.html"
     success_url = reverse_lazy("labels")
-    success_message = _('Label successfully created')
+    success_message = _("Label successfully created")
 
 
 class LabelUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
@@ -23,7 +23,7 @@ class LabelUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = LabelForm
     template_name = "labels/label_update.html"
     success_url = reverse_lazy("labels")
-    success_message = _('Label successfully updated')
+    success_message = _("Label successfully updated")
 
 
 class LabelDeleteView(LoginRequiredMixin, DeleteView):
@@ -38,16 +38,16 @@ class LabelDeleteView(LoginRequiredMixin, DeleteView):
             count = self.object.tasks.count()
             messages.warning(
                 request,
-                _('Cannot delete label "%(name)s". It is used in %(count)d tasks.') % {
-                    'name': self.object.name,
-                    'count': count
-                }
+                _('Label "%(name)s" used in %(count)d tasks') % {
+                    "name": self.object.name, "count": count
+                },
             )
-            return redirect('labels')
+            return redirect("labels")
 
         messages.success(
             request,
-            _('Label "%(name)s" deleted successfully') % {'name': self.object.name}
+            _('Label "%(name)s" deleted successfully')
+            % {"name": self.object.name},
         )
         return self.delete(request, *args, **kwargs)
 

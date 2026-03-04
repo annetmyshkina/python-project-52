@@ -1,4 +1,3 @@
-
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from django.urls import reverse
@@ -20,13 +19,17 @@ class UsersCRUDTest(TestCase):
 
     def test_create_user_success(self):
         self.client.logout()
-        response = self.client.post(reverse("user_create"), {
-            "first_name": "Новый",
-            "last_name": "Пользователь",
-            "username": "newuser123",
-            "password1": "SecurePass123",
-            "password2": "SecurePass123",
-        }, follow=True)
+        response = self.client.post(
+            reverse("user_create"),
+            {
+                "first_name": "Новый",
+                "last_name": "Пользователь",
+                "username": "newuser123",
+                "password1": "SecurePass123",
+                "password2": "SecurePass123",
+            },
+            follow=True,
+        )
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue(User.objects.filter(username="newuser123").exists())
@@ -34,11 +37,15 @@ class UsersCRUDTest(TestCase):
 
     def test_update_user_profile_success(self):
         url = reverse("user_update", kwargs={"pk": self.user1.pk})
-        response = self.client.post(url, {
-            "first_name": "Обновленный",
-            "last_name": "Пользователь",
-            "username": "user_updated",
-        }, follow=True)
+        response = self.client.post(
+            url,
+            {
+                "first_name": "Обновленный",
+                "last_name": "Пользователь",
+                "username": "user_updated",
+            },
+            follow=True,
+        )
 
         self.assertEqual(response.status_code, 200)
         self.user1.refresh_from_db()
@@ -58,4 +65,3 @@ class UsersCRUDTest(TestCase):
         response = self.client.post(url, {"confirm": True}, follow=True)
         self.assertRedirects(response, reverse("home"))
         self.assertFalse(User.objects.filter(pk=user1_pk).exists())
-

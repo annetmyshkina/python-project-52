@@ -12,17 +12,17 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Statuses',
+            name="Statuses",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=30, unique=True, verbose_name='Name')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Created at')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Updated at')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("name", models.CharField(max_length=30, unique=True, verbose_name="Name")),
+                ("created_at", models.DateTimeField(auto_now_add=True, verbose_name="Created at")),
+                ("updated_at", models.DateTimeField(auto_now=True, verbose_name="Updated at")),
             ],
             options={
-                'verbose_name': 'Status',
-                'verbose_name_plural': 'Statuses',
-                'ordering': ['id'],
+                "verbose_name": "Status",
+                "verbose_name_plural": "Statuses",
+                "ordering": ["id"],
             },
         ),
     ]
