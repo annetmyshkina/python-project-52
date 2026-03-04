@@ -38,9 +38,8 @@ class LabelDeleteView(LoginRequiredMixin, DeleteView):
             count = self.object.tasks.count()
             messages.warning(
                 request,
-                _('Label "%(name)s" used in %(count)d tasks') % {
-                    "name": self.object.name, "count": count
-                },
+                _('Label "%(name)s" used in %(count)d tasks')
+                % {"name": self.object.name, "count": count},
             )
             return redirect("labels")
 
