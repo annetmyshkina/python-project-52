@@ -1,7 +1,10 @@
+from urllib.parse import urlencode
+
 from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from django.urls import reverse
 
+from labels.models import Labels
 from statuses.models import Statuses
 
 from .models import Tasks
@@ -121,3 +124,109 @@ class TaskCRUDTest(TestCase):
 
         self.client.post(url, follow=True)
         self.assertFalse(Tasks.objects.filter(pk=task.pk).exists())
+
+
+class TaskFilterTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_user(
+            username="testuser", password="testpass123"
+        )
+
+        cls.status1 = Statuses.objects.create(name="Done")
+        cls.status2 = Statuses.objects.create(name="In Progress")
+
+        cls.label_critical = Labels.objects.create(name="Critical")
+        cls.label_bug = Labels.objects.create(name="Bug")
+
+        cls.task1 = Tasks.objects.create(
+            name="Critical Task Done",
+            status=cls.status1,
+            author=cls.user,
+        )
+        cls.task1.labels.add(cls.label_critical)
+
+        cls.task2 = Tasks.objects.create(
+            name="In Progress Critical Task",
+            status=cls.status2,
+            author=cls.user,
+            executor=cls.user,
+        )
+        cls.task2.labels.add(cls.label_critical)
+
+        cls.task3 = Tasks.objects.create(
+            name="Bug Task In Progress",
+            status=cls.status2,
+            author=cls.user,
+        )
+        cls.task3.labels.add(cls.label_bug)
+
+    def setUp(self):
+        self.client = Client()
+        self.client.login(username="testuser", password="testpass123")
+
+    def test_filter_by_status_done(self):
+        url = f"{reverse('tasks')}?status={self.status1.pk}"
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Critical Task Done")
+        self.assertNotContains(response, "In Progress Critical")
+        self.assertNotContains(response, "Bug Task")
+
+    def test_filter_by_status_in_progress(self):
+        url = f"{reverse('tasks')}?status={self.status2.pk}"
+        response = self.client.get(url)
+
+        self.assertContains(response, "In Progress Critical Task")
+        self.assertContains(response, "Bug Task In Progress")
+        self.assertNotContains(response, "Critical Task Done")
+
+    def test_filter_by_executor(self):
+        url = f"{reverse('tasks')}?executor={self.user.pk}"
+        response = self.client.get(url)
+
+        self.assertContains(response, "In Progress Critical Task")
+        self.assertNotContains(response, "Critical Task Done")
+
+    def test_filter_by_label_critical(self):
+        url = f"{reverse('tasks')}?label={self.label_critical.pk}"
+        response = self.client.get(url)
+
+        self.assertContains(response, "Critical Task Done")
+        self.assertContains(response, "In Progress Critical Task")
+        self.assertNotContains(response, "Bug Task In Progress")
+
+    def test_filter_by_label_bug(self):
+        url = f"{reverse('tasks')}?label={self.label_bug.pk}"
+        response = self.client.get(url)
+
+        self.assertContains(response, "Bug Task In Progress")
+        self.assertNotContains(response, "Critical Task Done")
+        self.assertNotContains(response, "In Progress Critical Task")
+
+    def test_filter_combination_status_label(self):
+        base_url = reverse("tasks")
+        params = urlencode({
+            "status": self.status2.pk,
+            "label": self.label_critical.pk
+        })
+        url = f"{base_url}?{params}"
+        response = self.client.get(url)
+
+        self.assertContains(response, "In Progress Critical Task")
+        self.assertNotContains(response, "Critical Task Done")
+        self.assertNotContains(response, "Bug Task In Progress")
+
+    def test_empty_filter(self):
+        url = reverse("tasks")
+        response = self.client.get(url)
+
+        self.assertContains(response, "Critical Task Done")
+        self.assertContains(response, "In Progress Critical Task")
+        self.assertContains(response, "Bug Task In Progress")
+
+    def test_filter_form_in_context(self):
+        response = self.client.get(reverse("tasks"))
+        self.assertIn("filter", response.context)
+        self.assertTrue(hasattr(response.context["filter"], "form"))
