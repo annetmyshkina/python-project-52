@@ -15,7 +15,10 @@ render-start:
 	gunicorn task_manager.wsgi:application
 
 check:
-	uv run ruff check task_manager
+	uv run ruff check . --exclude="**/migrations/" --exclude="task_manager/settings.py"
+
+format:
+	uv run ruff format . --exclude="**/migrations/" --exclude="task_manager/settings.py"
 
 fix:
 	uv run ruff check --fix .
