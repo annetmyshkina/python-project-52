@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 class Tasks(models.Model):
@@ -49,13 +48,10 @@ class Tasks(models.Model):
     class Meta:
         verbose_name = _('Task')
         verbose_name_plural = _('Tasks')
-        ordering = ['id']
+        ordering = ['name']
 
     def __str__(self):
         return self.name
 
-    def clean(self):
-        if self.executor and not User.objects.filter(pk=self.executor.pk).exists():
-            raise ValidationError({'executor': 'The specified performer does not exist'})
 
 
