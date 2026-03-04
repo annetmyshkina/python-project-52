@@ -1,14 +1,20 @@
+import django_filters
+from django import forms
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404
 from django.contrib.auth.models import User
-from statuses.models import Statuses
-from .models import Tasks
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.utils.translation import gettext_lazy as _
+from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
+from django_filters.views import FilterView
+
+from labels.models import Labels
+from statuses.models import Statuses
+
 from .forms import TaskForm
+from .models import Tasks
 
 
 class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -16,10 +22,16 @@ class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = TaskForm
     template_name = "tasks/task_create.html"
     success_url = reverse_lazy("tasks")
-    success_message = _('Task successfully created')
+    success_message = _("Task successfully created")
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        task = form.save(commit=False)
+        task.author = self.request.user
+        task.save()
+
+        if form.cleaned_data["labels"]:
+            task.labels.set(form.cleaned_data["labels"])
+
         return super().form_valid(form)
 
 
@@ -28,7 +40,16 @@ class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = TaskForm
     template_name = "tasks/task_update.html"
     success_url = reverse_lazy("tasks")
-    success_message = _('Task successfully updated')
+    success_message = _("Task successfully updated")
+
+    def form_valid(self, form):
+        task = form.save(commit=False)
+        task.save()
+
+        if form.cleaned_data["labels"]:
+            task.labels.set(form.cleaned_data["labels"])
+
+        return super().form_valid(form)
 
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
@@ -39,15 +60,15 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
         if obj.author != self.request.user:
-            messages.error(self.request, _('You cannot delete this task.'))
-            raise Http404(_("You cannot delete this task."))
+            messages.error(self.request, _("You cannot delete this task."))
+            return redirect("tasks")
         return obj
 
     def delete(self, request, *args, **kwargs):
         obj = self.get_object()
         messages.success(
             request,
-            _('Task "%(name)s" deleted successfully') % {'name': obj.name}
+            _('Task "%(name)s" deleted successfully') % {"name": obj.name},
         )
         return super().delete(request, *args, **kwargs)
 
@@ -57,30 +78,52 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
     template_name = "tasks/task_detail.html"
     context_object_name = "task"
 
-class TasksView(LoginRequiredMixin, ListView):
+
+class TaskFilter(django_filters.FilterSet):
+    status = django_filters.ModelChoiceFilter(
+        queryset=Statuses.objects.all(), label=_("Status")
+    )
+    executor = django_filters.ModelChoiceFilter(
+        queryset=User.objects.all(), label=_("Executor")
+    )
+    label = django_filters.ModelChoiceFilter(
+        queryset=Labels.objects.all(), method="filter_label", label=_("Label")
+    )
+    my_tasks = django_filters.BooleanFilter(
+        method="filter_my_tasks",
+        label=_("My tasks"),
+        widget=forms.CheckboxInput(),
+    )
+
+    class Meta:
+        model = Tasks
+        fields = []
+
+    def filter_label(self, queryset, value):
+        return queryset.filter(labels=value) if value else queryset
+
+    def filter_my_tasks(self, queryset, value):
+        if value:
+            return queryset.filter(author=self.request.user)
+        return queryset
+
+
+class TasksView(LoginRequiredMixin, FilterView):
     model = Tasks
     template_name = "tasks/tasks_list.html"
     context_object_name = "tasks"
+    filterset_class = TaskFilter
     ordering = ["name"]
     paginate_by = 10
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        status = self.request.GET.get("status")
-        executor = self.request.GET.get("executor")
-
-        if status:
-            queryset = queryset.filter(status__pk=status)
-        if executor:
-            queryset = queryset.filter(executor__pk=executor)
-        return queryset
+        return (
+            super()
+            .get_queryset()
+            .select_related("status", "author", "executor")
+            .prefetch_related("labels")
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["statuses"] = Statuses.objects.all()
-        context["executors"] = User.objects.all()
-        context["selected_status"] = self.request.GET.get("status")
-        context["selected_executor"] = self.request.GET.get("executor")
         return context
-
-
