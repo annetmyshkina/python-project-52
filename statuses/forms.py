@@ -16,6 +16,7 @@ class StatusForm(forms.ModelForm):
         labels = {'name': _('Name')}
         error_messages = {
             'name': {
-                'unique': _('Status with this name already exists')
+                'unique': _('Status with this name already exists'),
+                'required': _('Name cannot be empty')
             }
         }
