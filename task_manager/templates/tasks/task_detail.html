@@ -22,19 +22,35 @@
                 <div class="row g-4">
                     <div class="col-md-3">
                         <label class="form-label fw-bold text-muted mb-2 h6">{% trans "Status" %}</label>
-                        <span class="badge bg-primary fs-5 px-3 py-2">{{ object.status.name|default:"—" }}</span>
+                        <span class="badge bg-primary fs-6 px-3 py-2 w-100 text-start">{{ object.status.name|default:"—" }}</span>
                     </div>
+
                     <div class="col-md-3">
                         <label class="form-label fw-bold text-muted mb-2 h6">{% trans "Author" %}</label>
-                        <span class="text-muted fs-6">{{ object.author.get_full_name|default:object.author.username|default:"—" }}</span>
+                        <span class="text-muted fs-6 d-block">{{ object.author.get_full_name|default:object.author.username|default:"—" }}</span>
                     </div>
+
                     <div class="col-md-3">
                         <label class="form-label fw-bold text-muted mb-2 h6">{% trans "Executor" %}</label>
-                        <span class="text-muted fs-6">{{ object.executor.get_full_name|default:object.executor.username|default:"—" }}</span>
+                        <span class="text-muted fs-6 d-block">{{ object.executor.get_full_name|default:object.executor.username|default:"—" }}</span>
                     </div>
+
                     <div class="col-md-3">
                         <label class="form-label fw-bold text-muted mb-2 h6">{% trans "Created" %}</label>
-                        <span class="text-muted fs-6">{{ object.created_at|date:"d.m.Y H:i"|default:"—" }}</span>
+                        <span class="text-muted fs-6 d-block">{{ object.created_at|date:"d.m.Y H:i"|default:"—" }}</span>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="row">
+                    <div class="col-12">
+                        <label class="form-label fw-bold text-muted mb-2 h6">{% trans "Labels" %}</label>
+                        <div class="d-flex flex-wrap gap-1">
+                            {% for label in object.labels.all %}
+                                <span class="badge bg-secondary fs-6 px-2 py-1">{{ label.name }}</span>
+                            {% empty %}
+                                <span class="text-muted fs-6">—</span>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
 
@@ -64,7 +80,8 @@
                     <i class="bi bi-pencil me-2"></i>
                     {% trans "Edit" %}
                 </a>
-                <a href="{% url 'task_delete' object.pk %}" class="btn btn-outline-danger btn-lg px-4">
+                <a href="{% url 'task_delete' object.pk %}" class="btn btn-outline-danger btn-lg px-4"
+                   onclick="return confirm('{% trans "Delete this task?" %}')">
                     <i class="bi bi-trash me-2"></i>
                     {% trans "Delete" %}
                 </a>
@@ -74,5 +91,15 @@
     </div>
 </div>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
 
 

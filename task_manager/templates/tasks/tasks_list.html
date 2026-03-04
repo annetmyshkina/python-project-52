@@ -17,33 +17,32 @@
 
         <form class="mb-4 d-flex gap-3 align-items-end" method="get">
             <div class="flex-grow-1">
-                <label class="form-label">{% trans "Status" %}</label>
-                <select name="status" class="form-select" aria-label="{% trans 'Status filter' %}">
-                    <option value="">{% trans "All statuses" %}</option>
-                    {% for status in statuses %}
-                    <option value="{{ status.pk }}" {% if status.pk == selected_status %}selected{% endif %}>
-                        {{ status.name }}
-                    </option>
-                    {% endfor %}
-                </select>
+                <label for="{{ filter.form.status.id_for_label }}" class="form-label fw-bold">{% trans "Status" %}</label>
+                {{ filter.form.status }}
             </div>
 
             <div class="flex-grow-1">
-                <label class="form-label">{% trans "Executor" %}</label>
-                <select name="executor" class="form-select" aria-label="{% trans 'Executor filter' %}">
-                    <option value="">{% trans "All executors" %}</option>
-                    {% for user in executors %}
-                    <option value="{{ user.pk }}" {% if user.pk == selected_executor %}selected{% endif %}>
-                        {{ user.get_full_name|default:user.username }}
-                    </option>
-                    {% endfor %}
-                </select>
+                <label for="{{ filter.form.executor.id_for_label }}" class="form-label fw-bold">{% trans "Executor" %}</label>
+                {{ filter.form.executor }}
+            </div>
+
+            <div class="flex-grow-1">
+                <label for="{{ filter.form.label.id_for_label }}" class="form-label fw-bold">{% trans "Label" %}</label>
+                {{ filter.form.label }}
+            </div>
+
+            <div class="flex-grow-1">
+                <label for="{{ filter.form.my_tasks.id_for_label }}" class="form-label fw-bold">{{ filter.form.my_tasks.label }}</label>
+                {{ filter.form.my_tasks }}
             </div>
 
             <div>
-                <button type="submit" class="btn btn-outline-secondary">
+                <button type="submit" class="btn btn-outline-secondary me-1">
                     {% trans "Filter" %}
                 </button>
+                <a href="{% url 'tasks' %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-clockwise me-1"></i>{% trans "Reset" %}
+                </a>
             </div>
         </form>
 
@@ -109,5 +108,4 @@
     </div>
 </div>
 {% endblock %}
-
 

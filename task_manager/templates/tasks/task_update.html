@@ -15,7 +15,29 @@
             <div class="card-body">
                 <form method="post">
                     {% csrf_token %}
-                    {% bootstrap_form form layout='default' %}
+                    {% for field in form %}
+                        {% if field.name != 'labels' %}
+                            <div class="mb-3">
+                                <label for="{{ field.id_for_label }}" class="form-label fw-bold">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.help_text %}
+                                    <div class="form-text">{{ field.help_text }}</div>
+                                {% endif %}
+                                {% for error in field.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">{% trans "Labels" %}</label>
+                        <div class="border rounded p-3 bg-light overflow-auto" style="height: 200px;">
+                            {% bootstrap_field form.labels layout="inline" show_label=False %}
+                        </div>
+                        <div class="form-text">Прокрутите для выбора меток</div>
+                    </div>
+
                     <div class="mt-4 d-flex gap-2 justify-content-end">
                         <a href="{% url 'tasks' %}" class="btn btn-secondary">
                             <i class="bi bi-arrow-left me-1"></i>{% trans "Cancel" %}
