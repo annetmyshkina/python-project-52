@@ -1,4 +1,4 @@
-name: hexlet-code CI/CD + SonarQube
+name: MyCI
 on:
   push:
     branches: [ main ]
