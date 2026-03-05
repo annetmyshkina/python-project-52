@@ -43,7 +43,7 @@ jobs:
 
     - name: SonarQube Scan
       if: github.event_name == 'pull_request'
-      uses: SonarSource/sonarqube-scan-action@v2
+      uses: SonarSource/sonarqube-scan-action@1a6d90e4e4f8f5e5a8b9c0d1e2f3a4b5c6d7e8f9
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
