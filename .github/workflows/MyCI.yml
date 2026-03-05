@@ -79,30 +79,3 @@ jobs:
       uses: sonarsource/sonarqube-quality-gate-action@v1.0
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-  deploy:
-    needs: [test, quality-gate]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.13'
-
-    - name: Setup uv
-      uses: astral-sh/setup-uv@v5
-      with:
-        enable-cache: true
-        python-version: '3.13'
-
-    - name: Deploy
-      run: |
-        make install
-        make migrate
-        make collectstatic
-        make build
