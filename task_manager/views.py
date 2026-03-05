@@ -1,6 +1,5 @@
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
-from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 
