@@ -54,4 +54,7 @@ exclude = [
 ]
 
 [dependency-groups]
-dev = ["ruff>=0.14.14"]
+dev = [
+    "ruff>=0.14.14",
+    "coverage>=7.10.0",
+]
