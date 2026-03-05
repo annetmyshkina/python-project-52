@@ -84,5 +84,8 @@ class StatusCRUDTest(TestCase):
 
         messages = list(response.context["messages"])
         self.assertTrue(
-            any('Status "Protected" used in 1 tasks' in str(m.message) for m in messages)
+            any(
+                'Status "Protected" used in 1 tasks' in str(m.message)
+                for m in messages
+            )
         )

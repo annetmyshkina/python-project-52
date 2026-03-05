@@ -4,6 +4,7 @@ from django.urls import reverse
 
 from statuses.models import Statuses
 from tasks.models import Tasks
+
 from .models import Labels
 
 
@@ -74,8 +75,6 @@ class LabelCRUDTest(TestCase):
         self.assertFalse(Labels.objects.filter(pk=label.pk).exists())
 
     def test_cannot_delete_label_with_tasks(self):
-        from statuses.models import Statuses
-        from tasks.models import Tasks
 
         status = Statuses.objects.create(name="Test")
         label = Labels.objects.create(name="Protected")
@@ -88,6 +87,4 @@ class LabelCRUDTest(TestCase):
         self.assertTrue(Labels.objects.filter(pk=label.pk).exists())
 
         messages_list = list(response.context["messages"])
-        self.assertTrue(
-            any("used in" in str(m.message) for m in messages_list)
-        )
+        self.assertTrue(any("used in" in str(m.message) for m in messages_list))

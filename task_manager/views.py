@@ -25,7 +25,8 @@ class CustomLogoutView(LogoutView):
         messages.success(self.request, "You have successfully logged out!")
         return super().dispatch(request, *args, **kwargs)
 
-def test_error(request) :
+
+def test_error(request):
     """Вызывает ошибку тестирования для Rollbar."""
     a = None
     a.hello()

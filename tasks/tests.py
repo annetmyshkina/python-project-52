@@ -207,10 +207,9 @@ class TaskFilterTest(TestCase):
 
     def test_filter_combination_status_label(self):
         base_url = reverse("tasks")
-        params = urlencode({
-            "status": self.status2.pk,
-            "label": self.label_critical.pk
-        })
+        params = urlencode(
+            {"status": self.status2.pk, "label": self.label_critical.pk}
+        )
         url = f"{base_url}?{params}"
         response = self.client.get(url)
 
