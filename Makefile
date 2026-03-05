@@ -1,6 +1,6 @@
 
 install:
-	uv sync
+	uv sync --dev
 
 test:
 	coverage run manage.py test
