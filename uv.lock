@@ -208,7 +208,7 @@ dependencies = [
     { name = "whitenoise" },
 ]
 
-[package.dev-dependencies]
+[package.optional-dependencies]
 dev = [
     { name = "coverage" },
     { name = "ruff" },
@@ -216,6 +216,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "coverage", marker = "extra == 'dev'", specifier = ">=7.10.0" },
     { name = "dj-database-url" },
     { name = "django", specifier = ">=6.0.1" },
     { name = "django-bootstrap5" },
@@ -224,14 +225,10 @@ requires-dist = [
     { name = "psycopg2-binary" },
     { name = "python-dotenv" },
     { name = "rollbar" },
+    { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.14.14" },
     { name = "whitenoise" },
 ]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "coverage", specifier = ">=7.10.0" },
-    { name = "ruff", specifier = ">=0.14.14" },
-]
+provides-extras = ["dev"]
 
 [[package]]
 name = "idna"
