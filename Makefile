@@ -1,11 +1,11 @@
 
 install:
-	uv sync --dev
+	uv sync --extra dev
 
 test:
-	coverage run manage.py test
-	coverage report
-	coverage xml
+	uv run coverage run manage.py test
+	uv run coverage report
+	uv run coverage xml
 
 check:
 	uv run ruff check . --exclude="**/migrations/" --exclude="task_manager/settings.py"
@@ -29,8 +29,8 @@ run:
 	uv run python manage.py runserver
 
 render-start:
-	gunicorn task_manager.wsgi:application
+	uv run gunicorn task_manager.wsgi:application
 
 deploy:
-	migrate collectstatic build
+	uv run make migrate collectstatic build
 
