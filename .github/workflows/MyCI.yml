@@ -20,18 +20,13 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-          python-version: '3.13'
+        python-version: '3.13'
 
     - name: Setup uv
-      uses: astral-sh/setup-uv@v1
+      uses: astral-sh/setup-uv@v5
       with:
         enable-cache: true
-
-    - name: Cache uv
-      uses: actions/cache@v4
-      with:
-        path: .uv-cache
-        key: uv-${{ hashFiles('pyproject.toml') }}
+        python-version: '3.13'
 
     - name: Install & Lint
       run: |
@@ -40,14 +35,15 @@ jobs:
         make format
 
     - name: Tests + Coverage
-      run: |
-        make test
+      run: make test
 
-    - name: Upload coverage
-      uses: codecov/codecov-action@af2ee03a4e3e11499d866845a1e6c5a11f85cf4e
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        files: ./coverage.xml
 
-    - name: SonarQubeScan
-      uses: sonarsource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602
+    - name: SonarQube Scan
+      uses: sonarsource/sonarqube-scan-action@v5
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: https://sonarcloud.io
@@ -55,15 +51,28 @@ jobs:
         args: >
           -Dsonar.projectKey=annetmyshkina_python-project-52
           -Dsonar.organization=annetmyshkina
-          -Dsonar.python.coverage.reportPaths=coverage.lcov
+          -Dsonar.python.coverage.reportPaths=coverage.xml
+
+    - name: Upload SonarQube metadata
+      if: github.event_name == 'pull_request'
+      uses: actions/upload-artifact@v4
+      with:
+        name: sonar-report
+        path: .scannerwork/report-task.txt
+        retention-days: 1
 
   quality-gate:
     needs: test
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
+    - name: Download SonarQube metadata
+      uses: actions/download-artifact@v4
+      with:
+        name: sonar-report
+
     - name: SonarQube Quality Gate
-      uses: sonarqube-community/sonarqube-quality-gate-action@v1.0
+      uses: sonarsource/sonarqube-quality-gate-action@v1.0
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
@@ -73,8 +82,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: astral-sh/setup-uv@v5
-    - run: |
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+
+    - name: Setup uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        enable-cache: true
+        python-version: '3.13'
+
+    - name: Deploy
+      run: |
         make install
         make migrate
         make collectstatic
