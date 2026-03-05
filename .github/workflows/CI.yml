@@ -39,7 +39,7 @@ jobs:
         make test
 
     - name: Upload coverage
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@af2ee03a4e3e11499d866845a1e6c5a11f85cf4e
 
     - name: SonarQube Scan
       if: github.event_name == 'pull_request'
