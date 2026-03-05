@@ -41,12 +41,16 @@ jobs:
     - name: Upload coverage
       uses: codecov/codecov-action@af2ee03a4e3e11499d866845a1e6c5a11f85cf4e
 
-    - name: SonarQube Scan
-      if: github.event_name == 'pull_request'
-      uses: SonarSource/sonarqube-scan-action@1a6d90e4e4f8f5e5a8b9c0d1e2f3a4b5c6d7e8f9
+    - name: SonarQubeScan
+      uses: sonarsource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        SONAR_HOST_URL: https://sonarcloud.io
+      with:
+        args: >
+          -Dsonar.projectKey=annetmyshkina_python-project-52
+          -Dsonar.organization=annetmyshkina
+          -Dsonar.python.coverage.reportPaths=coverage.lcov
 
   quality-gate:
     needs: test
