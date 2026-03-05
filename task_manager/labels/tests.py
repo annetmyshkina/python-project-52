@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from statuses.models import Statuses
-from tasks.models import Tasks
+from task_manager.statuses.models import Statuses
+from task_manager.tasks.models import Tasks
 
 from .models import Labels
 

@@ -10,8 +10,8 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 from django_filters.views import FilterView
 
-from labels.models import Labels
-from statuses.models import Statuses
+from task_manager.labels.models import Labels
+from task_manager.statuses.models import Statuses
 
 from .forms import TaskForm
 from .models import Tasks

@@ -72,7 +72,7 @@ class StatusCRUDTest(TestCase):
         self.assertFalse(Statuses.objects.filter(pk=status.pk).exists())
 
     def test_cannot_delete_status_with_tasks(self):
-        from tasks.models import Tasks
+        from task_manager.tasks.models import Tasks
 
         status = Statuses.objects.create(name="Protected")
         Tasks.objects.create(name="T", status=status, author=self.user)
