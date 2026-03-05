@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from django.urls import reverse
 
+from statuses.models import Statuses
+from tasks.models import Tasks
 from .models import Labels
 
 
@@ -71,12 +73,12 @@ class LabelCRUDTest(TestCase):
         self.client.post(url, follow=True)
         self.assertFalse(Labels.objects.filter(pk=label.pk).exists())
 
-    def test_cannot_delete_status_with_tasks(self):
+    def test_cannot_delete_label_with_tasks(self):
         from statuses.models import Statuses
         from tasks.models import Tasks
 
+        status = Statuses.objects.create(name="Test")
         label = Labels.objects.create(name="Protected")
-        status = Statuses.objects.create(name="Test status")
         task = Tasks.objects.create(name="T", status=status, author=self.user)
         task.labels.add(label)
 
@@ -84,7 +86,8 @@ class LabelCRUDTest(TestCase):
         response = self.client.post(url, follow=True)
 
         self.assertTrue(Labels.objects.filter(pk=label.pk).exists())
+
         messages_list = list(response.context["messages"])
         self.assertTrue(
-            any("Cannot delete label" in str(m.message) for m in messages_list)
+            any("used in" in str(m.message) for m in messages_list)
         )
