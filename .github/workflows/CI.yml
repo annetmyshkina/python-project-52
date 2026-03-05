@@ -18,7 +18,7 @@ jobs:
         fetch-depth: 0
 
     - name: Setup uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@5dd7f623b9dedbd7f593ab032876f430d5717e4c
       with:
         enable-cache: true
 
