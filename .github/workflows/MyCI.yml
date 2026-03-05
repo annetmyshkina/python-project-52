@@ -17,17 +17,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
     - name: Setup Python
-      uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55
+      uses: actions/setup-python@v5
       with:
         python-version: '3.13'
 
     - name: Setup uv
-      uses: astral-sh/setup-uv@a892ecb5f33bfd5f70b9da56026f44ae902df21c
+      uses: astral-sh/setup-uv@v3
       with:
         enable-cache: true
         python-version: '3.13'
@@ -47,7 +47,7 @@ jobs:
         files: ./coverage.xml
 
     - name: SonarQube Scan
-      uses: sonarsource/sonarqube-scan-action@e5145fe946c1c3f196ebbf0a89803eec047c24fe
+      uses: sonarsource/sonarqube-scan-action@v6
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: https://sonarcloud.io
