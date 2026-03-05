@@ -1,0 +1,72 @@
+name: hexlet-code CI/CD + SonarQube
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  UV_CACHE_DIR: .uv-cache
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        enable-cache: true
+
+    - name: Cache uv
+      uses: actions/cache@v4
+      with:
+        path: .uv-cache
+        key: uv-${{ hashFiles('pyproject.toml') }}
+
+    - name: Install & Lint
+      run: |
+        make install
+        make check
+        make format
+
+    - name: Tests + Coverage
+      run: |
+        make test
+
+    - name: Upload coverage
+      uses: codecov/codecov-action@v4
+
+    - name: SonarQube Scan
+      if: github.event_name == 'pull_request'
+      uses: SonarSource/sonarqube-scan-action@v2
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+  quality-gate:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+    - name: SonarQube Quality Gate
+      uses: sonarqube-community/sonarqube-quality-gate-action@v1.0
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  deploy:
+    needs: [test, quality-gate]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: astral-sh/setup-uv@v5
+    - run: |
+        make install
+        make migrate
+        make collectstatic
+        make build
