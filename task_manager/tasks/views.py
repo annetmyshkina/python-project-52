@@ -99,10 +99,10 @@ class TaskFilter(django_filters.FilterSet):
         model = Tasks
         fields = []
 
-    def filter_label(self, queryset, name, value):
+    def filter_label(self, queryset, _, value):
         return queryset.filter(labels=value) if value else queryset
 
-    def filter_my_tasks(self, queryset, name, value):
+    def filter_my_tasks(self, queryset, _, value):
         if value:
             return queryset.filter(author=self.request.user)
         return queryset
