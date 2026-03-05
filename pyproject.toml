@@ -53,7 +53,7 @@ exclude = [
     "task_manager/settings.py",
 ]
 
-[dependency-groups]
+[project.optional-dependencies]
 dev = [
     "ruff>=0.14.14",
     "coverage>=7.10.0",
