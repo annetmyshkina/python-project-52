@@ -61,7 +61,7 @@ class BaseUserForm(forms.ModelForm):
         return username
 
 
-class CustomUserCreationForm(BaseUserForm, UserCreationForm):
+class CustomUserCreationForm(UserCreationForm, BaseUserForm):
     class Meta(BaseUserForm.Meta):
         model = User
         fields = [
@@ -80,18 +80,18 @@ class CustomUserCreationForm(BaseUserForm, UserCreationForm):
             "Your password must contain at least 8 characters."
         )
 
-        self.fields["password2"].label = _("Confirm password")
+        self.fields["password2"].label = _("Password confirmation")
         self.fields["password2"].help_text = _(
             "Please enter the password again to confirm."
         )
 
 
-class CustomUserChangeForm(BaseUserForm, UserChangeForm):
+class CustomUserChangeForm(UserChangeForm, BaseUserForm):
     password = None
 
     class Meta(BaseUserForm.Meta):
         model = User
-        fields = ("first_name", "last_name", "username")
+        fields = ["first_name", "last_name", "username"]
 
 
 class UserDeleteForm(forms.ModelForm):
