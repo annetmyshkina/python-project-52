@@ -80,7 +80,7 @@ DATABASES = {
         default="sqlite:///db.sqlite3",
         conn_max_age=600,
         conn_health_checks=True,
-        ssl_require=not is_sqlite,
+        ssl_require=False,
     )
 }
 
