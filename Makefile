@@ -2,27 +2,10 @@
 install:
 	uv sync
 
-collectstatic:
-	uv run python manage.py collectstatic --noinput
-
-migrate:
-	uv run python manage.py migrate
-
-build:
-	./build.sh
-
-run:
-	uv run python manage.py runserver
-
-render-start:
-	gunicorn task_manager.wsgi:application
-
-build:
-	./build.sh
-
 test:
 	coverage run manage.py test
 	coverage report
+	coverage xml
 
 check:
 	uv run ruff check . --exclude="**/migrations/" --exclude="task_manager/settings.py"
@@ -33,11 +16,21 @@ format:
 fix:
 	uv run ruff check --fix .
 
+migrate:
+	uv run python manage.py migrate
+
+collectstatic:
+	uv run python manage.py collectstatic --noinput
+
+build:
+	./build.sh
+
 run:
 	uv run python manage.py runserver
 
-ci:
-	check test
+render-start:
+	gunicorn task_manager.wsgi:application
 
 deploy:
 	migrate collectstatic build
+
