@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 
@@ -23,3 +24,9 @@ class CustomLogoutView(LogoutView):
     def dispatch(self, request, *args, **kwargs):
         messages.success(self.request, "You have successfully logged out!")
         return super().dispatch(request, *args, **kwargs)
+
+def test_error(request) :
+    """Вызывает ошибку тестирования для Rollbar."""
+    a = None
+    a.hello()
+    return HttpResponse("This will not be reached")

@@ -16,7 +16,8 @@ dependencies = [
     "psycopg2-binary",
     "whitenoise",
     "django-bootstrap5",
-    "django-filter"
+    "django-filter",
+    "rollbar"
 ]
 
 [build-system]
