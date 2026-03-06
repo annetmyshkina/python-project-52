@@ -11,6 +11,7 @@ from .forms import CustomUserChangeForm, CustomUserCreationForm, UserDeleteForm
 
 
 class UserCreateView(SuccessMessageMixin, CreateView):
+    model = User
     form_class = CustomUserCreationForm
     template_name = "users/user_create.html"
     success_url = reverse_lazy("login")
