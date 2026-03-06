@@ -9,12 +9,12 @@
 <div class="row justify-content-center mt-5">
     <div class="col-md-6">
         <div class="card shadow">
-            <div class="card-header bg-primary text-white">  <!-- ← ИСПРАВЛЕНО -->
+            <div class="card-header bg-primary text-white">
                 <h3 class="mb-0">{% trans "Sign out" %}</h3>
             </div>
             <div class="card-body text-center py-5">
                 <div class="mb-5">
-                    <i class="bi bi-box-arrow-right display-1 text-primary mb-4 d-block"></i>  <!-- ← text-primary -->
+                    <i class="bi bi-box-arrow-right display-1 text-primary mb-4 d-block"></i>
                     <h4>{% trans "Are you sure you want to log out?" %}</h4>
                     <p class="text-muted lead">{% trans "You will need to sign in again to access your tasks." %}</p>
                 </div>
@@ -25,11 +25,7 @@
                     </a>
                     <form method="post" action="{% url 'logout' %}" class="d-inline">
                         {% csrf_token %}
-                        {% bootstrap_button
-                            button_type="submit"
-                            content=_("Log out")
-                            extra_classes="btn btn-outline-danger btn-lg"
-                        %}
+                        <button type="submit" class="btn btn-primary">{% trans "Sign out" %}</button>
                     </form>
                 </div>
             </div>
