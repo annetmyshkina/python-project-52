@@ -1,14 +1,15 @@
 from django.contrib import messages
-from django.contrib.auth import logout
+from django.contrib.auth import logout, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm, UserDeleteForm
 
+User = get_user_model()
 
 class UserCreateView(SuccessMessageMixin, CreateView):
     model = User
@@ -16,6 +17,10 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     template_name = "users/user_create.html"
     success_url = reverse_lazy("login")
     success_message = _("User successfully registered!")
+
+    def form_valid(self, form):
+        form.save()
+        return redirect('login')
 
 
 class UserUpdateView(
