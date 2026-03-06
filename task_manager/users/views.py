@@ -2,7 +2,6 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model, logout
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
@@ -12,30 +11,35 @@ from .forms import CustomUserChangeForm, CustomUserCreationForm, UserDeleteForm
 User = get_user_model()
 
 
-class UserCreateView(CreateView):
+class UserCreateView(SuccessMessageMixin, CreateView):
     model = User
     form_class = CustomUserCreationForm
     template_name = "users/user_create.html"
-
-    def form_valid(self, form):
-        form.save()
-        return redirect("login")
+    success_url = reverse_lazy("login")
+    success_message = _("User successfully registered")
 
 
 class UserUpdateView(
-    SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    SuccessMessageMixin,
+    UpdateView,
 ):
     model = User
     form_class = CustomUserChangeForm
     template_name = "users/user_update.html"
     success_url = reverse_lazy("users")
-    success_message = _("User successfully updated!")
+    success_message = _("User successfully updated")
 
     def test_func(self):
         return self.get_object() == self.request.user
 
 
-class UserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class UserDeleteView(
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    DeleteView,
+):
     model = User
     form_class = UserDeleteForm
     template_name = "users/user_delete.html"
@@ -46,12 +50,15 @@ class UserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def form_valid(self, form):
         user = self.get_object()
+
         messages.success(
             self.request,
             _('User "%(username)s" has been successfully deleted!')
             % {"username": user.username},
         )
+
         logout(self.request)
+
         return super().form_valid(form)
 
 
