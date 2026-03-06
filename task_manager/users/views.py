@@ -62,9 +62,7 @@ class UserDeleteView(
         return self.get_object() == self.request.user
 
     def form_valid(self, form):
-        messages.success(
-            self.request, _('User has been successfully deleted')
-        )
+        messages.success(self.request, _("User has been successfully deleted"))
 
         logout(self.request)
         return super().form_valid(form)
