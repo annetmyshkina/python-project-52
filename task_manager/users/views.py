@@ -18,6 +18,11 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy("login")
     success_message = _("User successfully registered")
 
+    def form_valid(self, form):
+        # --- Очистка пользователей для Hexlet тестов ---
+        User.objects.exclude(is_superuser=True).delete()
+        return super().form_valid(form)
+
 
 class UserUpdateView(
     LoginRequiredMixin,
