@@ -16,7 +16,7 @@
                 <form method="post">
                     {% csrf_token %}
                     {% bootstrap_form form layout='default' %}
-                    {% bootstrap_button button_type="submit" content=_("Register") extra_classes="w-100" %}
+                    <button type="submit" class="btn btn-primary">{% trans "Register" %}</button>
                 </form>
 
                 <div class="text-center mt-3">
