@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Task Manager 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-06 15:21+0000\n"
+"POT-Creation-Date: 2026-03-06 16:16+0000\n"
 "PO-Revision-Date: 2026-03-06 18:22+0300\n"
 "Last-Translator: Анна Обухова <annette@example.com>\n"
 "Language-Team: Russian <ru@example.com>\n"
@@ -218,10 +218,8 @@ msgstr "Редактировать профиль"
 msgid "Logout"
 msgstr "Выход"
 
-#: task_manager/templates/base.html:96 task_manager/templates/login.html:4
-#: task_manager/templates/login.html:13 task_manager/templates/login.html:19
-#: task_manager/templates/users/user_create.html:24
-msgid "Sign in"
+#: task_manager/templates/base.html:96
+msgid "Sign in on main page"
 msgstr "Вход"
 
 #: task_manager/templates/base.html:101
@@ -374,6 +372,12 @@ msgstr "Метки не найдены"
 #: task_manager/templates/labels/labels_list.html:53
 msgid "Create first label"
 msgstr "Создайте первую метку"
+
+#: task_manager/templates/login.html:4 task_manager/templates/login.html:13
+#: task_manager/templates/login.html:19
+#: task_manager/templates/users/user_create.html:24
+msgid "Sign in"
+msgstr "Войти"
 
 #: task_manager/templates/login.html:22
 msgid "No account?"
@@ -551,18 +555,18 @@ msgstr "Обязательное. Не более 150 символов. Толь
 msgid "I confirm this action is irreversible"
 msgstr "Подтверждаю, что действие необратимо"
 
-#: task_manager/users/views.py:19
+#: task_manager/users/views.py:20
 msgid "User successfully registered"
 msgstr "Пользователь успешно зарегистрирован"
 
-#: task_manager/users/views.py:32
+#: task_manager/users/views.py:33
 msgid "User successfully updated"
 msgstr "Пользователь успешно изменен"
 
-#: task_manager/users/views.py:38
+#: task_manager/users/views.py:46
 msgid "You don't have the rights to change it."
 msgstr "У вас нет прав для изменения"
 
-#: task_manager/users/views.py:58
+#: task_manager/users/views.py:65
 msgid "User has been successfully deleted"
 msgstr "Пользователь успешно удален"
