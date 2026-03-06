@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import include, path
+from django.views.generic import RedirectView
 
 from . import views
 
@@ -12,5 +13,6 @@ urlpatterns = [
     path("tasks/", include("task_manager.tasks.urls")),
     path("labels/", include("task_manager.labels.urls")),
     path("login/", views.CustomLoginView.as_view(), name="login"),
+    path("login", RedirectView.as_view(url="/login/", permanent=False)),
     path("logout/", views.CustomLogoutView.as_view(), name="logout"),
 ]
