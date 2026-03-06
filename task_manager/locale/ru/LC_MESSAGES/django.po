@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Task Manager 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-06 09:34+0000\n"
-"PO-Revision-Date: 2026-03-04 21:52+0300\n"
+"POT-Creation-Date: 2026-03-06 15:21+0000\n"
+"PO-Revision-Date: 2026-03-06 18:22+0300\n"
 "Last-Translator: Анна Обухова <annette@example.com>\n"
 "Language-Team: Russian <ru@example.com>\n"
 "Language: ru\n"
@@ -32,7 +32,7 @@ msgstr "Название"
 
 #: task_manager/labels/forms.py:22
 msgid "Label with this name already exists"
-msgstr "Метка с таким названием уже существует"
+msgstr "уже существует"
 
 #: task_manager/labels/forms.py:23 task_manager/statuses/forms.py:23
 msgid "Name cannot be empty"
@@ -97,7 +97,7 @@ msgstr "Введите название статуса"
 
 #: task_manager/statuses/forms.py:22
 msgid "Status with this name already exists"
-msgstr "Статус с таким названием уже существует"
+msgstr "уже существует"
 
 #: task_manager/statuses/models.py:20 task_manager/tasks/models.py:15
 #: task_manager/tasks/views.py:84
@@ -356,7 +356,7 @@ msgstr "Действия"
 #: task_manager/templates/tasks/tasks_list.html:84
 #: task_manager/templates/users/users_list.html:46
 msgid "Edit"
-msgstr "Редактировать"
+msgstr "Изменить"
 
 #: task_manager/templates/labels/labels_list.html:42
 #: task_manager/templates/statuses/statuses_list.html:42
@@ -382,7 +382,7 @@ msgstr "Нет аккаунта?"
 #: task_manager/templates/login.html:23
 #: task_manager/templates/users/user_create.html:19
 msgid "Register"
-msgstr "Зарегистрироваться"
+msgstr "Регистрация"
 
 #: task_manager/templates/logout.html:13
 msgid "Sign out"
@@ -544,8 +544,6 @@ msgid "Enter username"
 msgstr "Введите имя пользователя"
 
 #: task_manager/users/forms.py:47
-#, fuzzy
-#| msgid "Required. 150 chars or fewer. Letters, digits, @/./+/-/_ only."
 msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr "Обязательное. Не более 150 символов. Только буквы, цифры и @/./+/-/_."
 
@@ -554,52 +552,17 @@ msgid "I confirm this action is irreversible"
 msgstr "Подтверждаю, что действие необратимо"
 
 #: task_manager/users/views.py:19
-#, fuzzy
-#| msgid "User successfully registered!"
 msgid "User successfully registered"
 msgstr "Пользователь успешно зарегистрирован"
 
 #: task_manager/users/views.py:32
-#, fuzzy
-#| msgid "User successfully updated!"
 msgid "User successfully updated"
-msgstr "Пользователь успешно обновлён"
+msgstr "Пользователь успешно изменен"
 
-#: task_manager/users/views.py:56
-#, fuzzy, python-format
-#| msgid "User \"%(username)s\" has been successfully deleted!"
-msgid "User \"%(username)s\" has been successfully deleted"
-msgstr "Пользователь «%(username)s» успешно удалён"
+#: task_manager/users/views.py:38
+msgid "You don't have the rights to change it."
+msgstr "У вас нет прав для изменения"
 
-#~ msgid "Username already taken."
-#~ msgstr "Имя пользователя уже занято"
-
-#~ msgid "Password"
-#~ msgstr "Пароль"
-
-#~ msgid "Your password must contain at least 8 characters."
-#~ msgstr "Пароль должен содержать не менее 8 символов"
-
-#~ msgid "Confirm password"
-#~ msgstr "Подтверждение пароля"
-
-#~ msgid "Please enter the password again to confirm."
-#~ msgstr "Введите пароль ещё раз для подтверждения"
-
-#~ msgid "Status filter"
-#~ msgstr "Фильтр по статусам"
-
-#~ msgid "All statuses"
-#~ msgstr "Все статусы"
-
-#~ msgid "Executor filter"
-#~ msgstr "Фильтр по исполнителям"
-
-#~ msgid "All executors"
-#~ msgstr "Все исполнители"
-
-#~ msgid "--------"
-#~ msgstr "--------"
-
-#~ msgid "Create Status"
-#~ msgstr "Создать статус"
+#: task_manager/users/views.py:58
+msgid "User has been successfully deleted"
+msgstr "Пользователь успешно удален"

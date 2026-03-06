@@ -34,6 +34,11 @@ class UserUpdateView(
     def test_func(self):
         return self.get_object() == self.request.user
 
+    def handle_no_permission(self):
+        messages.error(self.request, _("You don't have the rights to change it."))
+        from django.shortcuts import redirect
+        return redirect("users")
+
 
 class UserDeleteView(
     LoginRequiredMixin,
@@ -49,16 +54,11 @@ class UserDeleteView(
         return self.get_object() == self.request.user
 
     def form_valid(self, form):
-        user = self.get_object()
-
         messages.success(
-            self.request,
-            _('User "%(username)s" has been successfully deleted')
-            % {"username": user.username},
+            self.request, _('User has been successfully deleted')
         )
 
         logout(self.request)
-
         return super().form_valid(form)
 
 
