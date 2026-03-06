@@ -111,15 +111,14 @@ else:
     ]
 
 
-LANGUAGE_CODE = "en"
+LANGUAGE_CODE = 'ru-ru'
+USE_I18N = True
+USE_TZ = True
+LOCALE_PATHS = [BASE_DIR / 'locale']
+LANGUAGES = [('en', 'English'), ('ru', 'Russian')]
 
 TIME_ZONE = "UTC"
 
-USE_I18N = True
-LANGUAGES = [("en", "English"), ("ru", "Russian")]
-
-USE_TZ = True
-LOCALE_PATHS = [BASE_DIR / "locale"]
 
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "home"
