@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model, logout
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
@@ -32,12 +33,19 @@ class UserUpdateView(
     success_message = _("User successfully updated")
 
     def test_func(self):
-        return self.get_object() == self.request.user
+        user = self.get_object()
+        return self.request.user == user
 
-    def handle_no_permission(self):
-        messages.error(self.request, _("You don't have the rights to change it."))
-        from django.shortcuts import redirect
-        return redirect("users")
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+        if response.status_code != 200:
+            return response
+
+        user = self.get_object()
+        if request.user != user and not request.user.is_superuser:
+            raise PermissionDenied(_("You don't have the rights to change it."))
+
+        return response
 
 
 class UserDeleteView(
