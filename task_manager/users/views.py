@@ -11,6 +11,7 @@ from .forms import CustomUserChangeForm, CustomUserCreationForm, UserDeleteForm
 
 User = get_user_model()
 
+
 class UserCreateView(SuccessMessageMixin, CreateView):
     model = User
     form_class = CustomUserCreationForm
@@ -20,7 +21,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         form.save()
-        return redirect('login')
+        return redirect("login")
 
 
 class UserUpdateView(
