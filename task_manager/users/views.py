@@ -53,7 +53,7 @@ class UserDeleteView(
 
         messages.success(
             self.request,
-            _('User "%(username)s" has been successfully deleted!')
+            _('User "%(username)s" has been successfully deleted')
             % {"username": user.username},
         )
 
