@@ -382,7 +382,7 @@ msgstr "Нет аккаунта?"
 #: task_manager/templates/login.html:23
 #: task_manager/templates/users/user_create.html:19
 msgid "Register"
-msgstr "Регистрация"
+msgstr "Зарегистрировать"
 
 #: task_manager/templates/logout.html:13
 msgid "Sign out"
