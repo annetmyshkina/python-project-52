@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Task Manager 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-06 16:16+0000\n"
+"POT-Creation-Date: 2026-03-06 16:25+0000\n"
 "PO-Revision-Date: 2026-03-06 18:22+0300\n"
 "Last-Translator: Анна Обухова <annette@example.com>\n"
 "Language-Team: Russian <ru@example.com>\n"
@@ -570,3 +570,12 @@ msgstr "У вас нет прав для изменения"
 #: task_manager/users/views.py:65
 msgid "User has been successfully deleted"
 msgstr "Пользователь успешно удален"
+
+#: task_manager/views.py:16
+msgid "You have successfully logged in."
+msgstr "Вы залогинены"
+
+#: task_manager/views.py:24
+msgid "You have successfully logged out."
+msgstr "Вы разлогинены"
+
