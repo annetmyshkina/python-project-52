@@ -43,6 +43,7 @@
                     </li>
                     {% endif %}
                 </ul>
+
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -69,31 +70,24 @@
                             {% endfor %}
                         </ul>
                     </li>
+                </ul>
 
-                    {% if user.is_authenticated %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ user.username }}
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="{% url 'user_update' user.pk %}">
-                                    <i class="bi bi-pencil me-2"></i>{% trans "Edit profile" %}
-                                </a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form method="post" action="{% url 'logout' %}" class="d-inline">
-                                        {% csrf_token %}
-                                        <button type="submit" class="dropdown-item" role="button">
-                                            {% trans "Logout" %}
-                                        </button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
+                {% if user.is_authenticated %}
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="nav-link btn btn-link" style="border: none; background: none; cursor: pointer;">
+                                        {% trans "Logout" %}
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
                     {% else %}
+                    <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="btn btn-outline-light ms-2" href="{% url 'login' %}">
-                                <i class="bi bi-box-arrow-in-right me-1"></i>{% trans "Sign in on main page" %}
+                                {% trans "Sign in" %}
                             </a>
                         </li>
                         <li class="nav-item">
@@ -101,8 +95,8 @@
                                 <i class="bi bi-person-plus me-1"></i>{% trans "Registration" %}
                             </a>
                         </li>
-                    {% endif %}
-                </ul>
+                    </ul>
+                {% endif %}
             </div>
         </div>
     </nav>
@@ -148,6 +142,7 @@
     {% bootstrap_javascript %}
 </body>
 </html>
+
 
 
 
