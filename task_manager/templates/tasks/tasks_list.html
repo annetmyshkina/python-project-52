@@ -10,9 +10,8 @@
     <div class="col-lg-10">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>{% trans "Tasks" %}</h2>
-            <a href="{% url 'task_create' %}" class="btn btn-primary">{% trans "Create task" %}</a>
+            <a href="{% url 'task_create' %}" class="btn btn-primary" role="button">{% trans "Create task" %}</a>
         </div>
-
         <form class="mb-4 d-flex gap-3 align-items-end" method="get">
             <div class="flex-grow-1">
                 <label for="{{ filter.form.status.id_for_label }}" class="form-label fw-bold">{% trans "Status" %}</label>

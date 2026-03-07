@@ -110,7 +110,7 @@ msgstr "Статус успешно создан"
 
 #: task_manager/statuses/views.py:26
 msgid "Status successfully updated"
-msgstr "Статус успешно обновлён"
+msgstr "Статус успешно изменен"
 
 #: task_manager/statuses/views.py:38
 msgid "The status cannot be deleted"
@@ -356,7 +356,7 @@ msgstr "Изменить"
 #: task_manager/templates/users/user_delete.html:37
 #: task_manager/templates/users/users_list.html:50
 msgid "Delete"
-msgstr "Удалить"
+msgstr "Да, удалить"
 
 #: task_manager/templates/labels/labels_list.html:51
 msgid "No labels found"
