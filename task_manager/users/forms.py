@@ -1,57 +1,13 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-from django.core.validators import RegexValidator
+from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
 
-class UserFieldsMixin:
-    first_name = forms.CharField(
-        max_length=30,
-        required=True,
-        label=_("First name"),
-        widget=forms.TextInput(
-            attrs={
-                "class": "form-control",
-                "placeholder": _("Enter your first name"),
-            }
-        ),
-    )
-
-    last_name = forms.CharField(
-        max_length=30,
-        required=True,
-        label=_("Last name"),
-        widget=forms.TextInput(
-            attrs={
-                "class": "form-control",
-                "placeholder": _("Enter your last name"),
-            }
-        ),
-    )
-
-    username = forms.CharField(
-        max_length=150,
-        required=True,
-        label=_("Username"),
-        validators=[RegexValidator(r"^[\w.@+-]+$", _("Invalid characters"))],
-        widget=forms.TextInput(
-            attrs={
-                "class": "form-control",
-                "placeholder": _("Enter username"),
-            }
-        ),
-        help_text=_(
-            "Required. 150 characters or fewer. "
-            "Letters, digits and @/./+/-/_ only."
-        ),
-    )
-
-
-class CustomUserCreationForm(UserFieldsMixin, UserCreationForm):
-    class Meta(UserCreationForm.Meta):
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
         model = User
         fields = (
             "first_name",
@@ -60,27 +16,73 @@ class CustomUserCreationForm(UserFieldsMixin, UserCreationForm):
             "password1",
             "password2",
         )
+        labels = {
+            "first_name": _("First name"),
+            "last_name": _("Last name"),
+            "username": _("Username"),
+        }
+        widgets = {
+            "first_name": forms.TextInput(attrs={"required": True}),
+            "last_name": forms.TextInput(attrs={"required": True}),
+            "username": forms.TextInput(attrs={"required": True}),
+        }
+
+        def save(self, commit=True):
+            user = super().save(commit=False)
+            password = self.cleaned_data.get("password1")
+            if password:
+                user.set_password(password)
+            if commit:
+                user.save()
+            return user
 
 
-class CustomUserChangeForm(UserFieldsMixin, UserChangeForm):
-    password = None
-
-    class Meta:
-        model = User
-        fields = (
-            "first_name",
-            "last_name",
-            "username",
+class UserUpdateForm(CustomUserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["password1"].required = False
+        self.fields["password2"].required = False
+        self.fields["password1"].help_text = _(
+            "Leave blank to keep current password"
+        )
+        self.fields["password1"].help_text = _(
+            "Leave blank to keep current password"
         )
 
+        if self.instance and self.instance.pk:
+            self.fields["password1"].initial = ""
+            self.fields["password2"].initial = ""
 
-class UserDeleteForm(forms.ModelForm):
+    def save(self, commit=True):
+        user = self.instance
+        user.first_name = self.cleaned_data["first_name"]
+        user.last_name = self.cleaned_data["last_name"]
+        user.username = self.cleaned_data["username"]
+
+        password1 = self.cleaned_data.get("password1")
+        if password1:
+            user.set_password(password1)
+
+        if commit:
+            user.save()
+        return user
+
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        if username == self.instance.username:
+            return username
+        if (
+            User.objects.filter(username=username)
+            .exclude(pk=self.instance.pk)
+            .exists()
+        ):
+            raise forms.ValidationError(_("already exists."))
+        return username
+
+
+class UserDeleteForm(forms.Form):
     confirm = forms.BooleanField(
         required=True,
         label=_("I confirm this action is irreversible"),
         widget=forms.CheckboxInput(attrs={"class": "form-check-input"}),
     )
-
-    class Meta:
-        model = User
-        fields = ("confirm",)

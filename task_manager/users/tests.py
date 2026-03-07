@@ -57,7 +57,9 @@ class UsersCRUDTest(TestCase):
         self.client.force_login(self.user2)
         url = reverse("user_update", kwargs={"pk": self.user1.pk})
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 403)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse("users"))
 
     def test_user_delete_own_account(self):
         user1_pk = self.user1.pk

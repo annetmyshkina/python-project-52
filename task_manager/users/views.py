@@ -2,12 +2,12 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model, logout
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.exceptions import PermissionDenied
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from .forms import CustomUserChangeForm, CustomUserCreationForm, UserDeleteForm
+from .forms import CustomUserCreationForm, UserDeleteForm, UserUpdateForm
 
 User = get_user_model()
 
@@ -27,25 +27,22 @@ class UserUpdateView(
     UpdateView,
 ):
     model = User
-    form_class = CustomUserChangeForm
+    form_class = UserUpdateForm
     template_name = "users/user_update.html"
     success_url = reverse_lazy("users")
     success_message = _("User successfully updated")
 
     def test_func(self):
-        user = self.get_object()
-        return self.request.user == user
+        return self.request.user == self.get_object()
 
-    def dispatch(self, request, *args, **kwargs):
-        response = super().dispatch(request, *args, **kwargs)
-        if response.status_code != 200:
-            return response
-
-        user = self.get_object()
-        if request.user != user and not request.user.is_superuser:
-            raise PermissionDenied(_("You don't have the rights to change it."))
-
-        return response
+    def handle_no_permission(self):
+        if not self.request.user.is_authenticated:
+            messages.error(
+                self.request, _("You are not logged in! Please log in.")
+            )
+            return redirect("login")
+        messages.error(self.request, _("You do not have the right to change"))
+        return redirect("users")
 
 
 class UserDeleteView(
