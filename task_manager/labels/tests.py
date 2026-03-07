@@ -87,4 +87,4 @@ class LabelCRUDTest(TestCase):
         self.assertTrue(Labels.objects.filter(pk=label.pk).exists())
 
         messages_list = list(response.context["messages"])
-        self.assertTrue(any("used in" in str(m.message) for m in messages_list))
+        self.assertTrue(any("The label cannot be deleted" in str(m.message) for m in messages_list))

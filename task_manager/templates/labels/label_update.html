@@ -20,7 +20,7 @@
                         <a href="{% url 'labels' %}" class="btn btn-secondary">
                             <i class="bi bi-arrow-left me-1"></i>{% trans "Cancel" %}
                         </a>
-                        {% bootstrap_button button_type="submit" content=_("Save changes") extra_classes="btn-primary" %}
+                        <button type="submit" class="btn btn-primary">{% trans "Save changes" %}</button>
                     </div>
                 </form>
             </div>

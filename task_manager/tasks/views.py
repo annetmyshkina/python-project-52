@@ -60,15 +60,14 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
         if obj.author != self.request.user:
-            messages.error(self.request, _("You cannot delete this task."))
+            messages.error(self.request, _("Only the task creator can delete a task"))
             return redirect("tasks")
         return obj
 
     def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
         messages.success(
             request,
-            _('Task "%(name)s" deleted successfully') % {"name": obj.name},
+            _('Task deleted successfully')
         )
         return super().delete(request, *args, **kwargs)
 
@@ -81,7 +80,8 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
 
 class TaskFilter(django_filters.FilterSet):
     status = django_filters.ModelChoiceFilter(
-        queryset=Statuses.objects.all(), label=_("Status")
+        queryset=Statuses.objects.all(),
+        label=_("Status"),
     )
     executor = django_filters.ModelChoiceFilter(
         queryset=User.objects.all(), label=_("Executor")

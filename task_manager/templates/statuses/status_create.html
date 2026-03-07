@@ -17,7 +17,7 @@
                     {% csrf_token %}
                     {% bootstrap_form form layout='default' %}
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-                        {% bootstrap_button button_type="submit" content=_("Create status") extra_classes="btn-primary me-md-2" %}
+                        <button type="submit" class="btn btn-primary">{% trans "Create status" %}</button>
                         <a href="{% url 'statuses' %}" class="btn btn-secondary">{% trans "Cancel" %}
                         </a>
                     </div>
