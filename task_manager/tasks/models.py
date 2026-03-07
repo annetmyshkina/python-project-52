@@ -4,11 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Tasks(models.Model):
-    name = models.CharField(
-        max_length=30,
-        verbose_name=_("Name"),
-        unique=True
-    )
+    name = models.CharField(max_length=30, verbose_name=_("Name"), unique=True)
 
     description = models.TextField(verbose_name=_("Description"))
 

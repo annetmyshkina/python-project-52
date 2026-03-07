@@ -60,15 +60,14 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
         if obj.author != self.request.user:
-            messages.error(self.request, _("Only the task creator can delete a task"))
+            messages.error(
+                self.request, _("Only the task creator can delete a task")
+            )
             return redirect("tasks")
         return obj
 
     def delete(self, request, *args, **kwargs):
-        messages.success(
-            request,
-            _('Task deleted successfully')
-        )
+        messages.success(request, _("Task deleted successfully"))
         return super().delete(request, *args, **kwargs)
 
 

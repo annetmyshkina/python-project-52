@@ -35,14 +35,10 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
         self.object = self.get_object()
 
         if self.object.tasks.exists():
-            messages.warning(
-                request,
-                _('The status cannot be deleted')
-            )
+            messages.warning(request, _("The status cannot be deleted"))
             return redirect("statuses")
 
-        messages.success(
-            request, _('Status deleted successfully'))
+        messages.success(request, _("Status deleted successfully"))
         return self.delete(request, *args, **kwargs)
 
 

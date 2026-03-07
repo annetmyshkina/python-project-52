@@ -35,16 +35,12 @@ class LabelDeleteView(LoginRequiredMixin, DeleteView):
         self.object = self.get_object()
 
         if self.object.tasks.exists():
-            messages.warning(
-                request,
-                _('The label cannot be deleted')
-            )
+            messages.warning(request, _("The label cannot be deleted"))
             return redirect("labels")
 
         messages.success(
             request,
-            _('Label deleted successfully')
-            % {"name": self.object.name},
+            _("Label deleted successfully") % {"name": self.object.name},
         )
         return self.delete(request, *args, **kwargs)
 

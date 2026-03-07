@@ -1,4 +1,3 @@
-
 from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
@@ -24,7 +23,7 @@ class TaskForm(forms.ModelForm):
             "name": forms.TextInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": _("Enter task name")
+                    "placeholder": _("Enter task name"),
                 },
             ),
             "description": forms.Textarea(
