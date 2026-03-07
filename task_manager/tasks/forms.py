@@ -11,7 +11,11 @@ from .models import Tasks
 class TaskForm(forms.ModelForm):
     labels = forms.ModelMultipleChoiceField(
         queryset=Labels.objects.all(),
-        widget=forms.CheckboxSelectMultiple(attrs={"class": "form-check"}),
+        widget=forms.SelectMultiple(attrs={
+            "class": "form-select",
+            "size": 8,
+            "style": "height: 200px;"
+        }),
         required=False,
         label=_("Labels"),
     )
@@ -42,5 +46,5 @@ class TaskForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields["status"].queryset = Statuses.objects.all()
         self.fields["status"].empty_label = _("----")
-        self.fields["executor"].queryset = User.objects.all()
+        self.fields["executor"].queryset = User.objects.filter(is_active=True)
         self.fields["executor"].empty_label = _("----")

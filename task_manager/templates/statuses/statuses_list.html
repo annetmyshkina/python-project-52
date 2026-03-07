@@ -35,11 +35,11 @@
                             <div class="btn-group" role="group">
                                 <a href="{% url 'status_update' status.pk %}"
                                    class="btn btn-outline-dark btn-sm">
-                                    <i class="bi bi-pencil me-1"></i>{% trans "Edit" %}
+                                    {% trans "Edit" %}
                                 </a>
                                 <a href="{% url 'status_delete' status.pk %}"
                                    class="btn btn-outline-danger btn-sm">
-                                    <i class="bi bi-trash me-1"></i>{% trans "Delete" %}
+                                    {% trans "Delete" %}
                                 </a>
                             </div>
                         </td>

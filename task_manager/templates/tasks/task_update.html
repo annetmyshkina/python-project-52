@@ -35,12 +35,12 @@
                         <div class="border rounded p-3 bg-light overflow-auto" style="height: 200px;">
                             {% bootstrap_field form.labels layout="inline" show_label=False %}
                         </div>
-                        <div class="form-text">Прокрутите для выбора меток</div>
+                        <div class="form-text">{% trans "Scroll to select labels" %}</div>
                     </div>
 
                     <div class="mt-4 d-flex gap-2 justify-content-end">
                         <a href="{% url 'tasks' %}" class="btn btn-secondary">
-                            <i class="bi bi-arrow-left me-1"></i>{% trans "Cancel" %}
+                            {% trans "Cancel" %}
                         </a>
                         {% bootstrap_button button_type="submit" content=_("Save changes") extra_classes="btn-primary" %}
                     </div>

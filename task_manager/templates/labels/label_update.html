@@ -18,7 +18,7 @@
                     {% bootstrap_form form layout='default' %}
                     <div class="mt-4 d-flex gap-2 justify-content-end">
                         <a href="{% url 'labels' %}" class="btn btn-secondary">
-                            <i class="bi bi-arrow-left me-1"></i>{% trans "Cancel" %}
+                            {% trans "Cancel" %}
                         </a>
                         <button type="submit" class="btn btn-primary">{% trans "Save changes" %}</button>
                     </div>

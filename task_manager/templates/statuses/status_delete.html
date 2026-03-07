@@ -25,10 +25,10 @@
 
                     <div class="d-flex gap-2 justify-content-end mt-4">
                         <a href="{% url 'statuses' %}" class="btn btn-secondary">
-                            <i class="bi bi-x-circle me-1"></i>{% trans "Cancel" %}
+                            {% trans "Cancel" %}
                         </a>
                         <button type="submit" class="btn btn-danger">
-                            <i class="bi bi-trash me-1"></i>{% trans "Yes, delete" %}
+                            {% trans "Yes, delete" %}
                         </button>
                     </div>
                 </form>
