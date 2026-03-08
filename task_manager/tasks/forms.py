@@ -45,5 +45,6 @@ class TaskForm(forms.ModelForm):
 
         self.fields["executor"].queryset = User.objects.all()
         self.fields["executor"].empty_label = _("----")
+        self.fields["executor"].label_from_instance = lambda obj: obj.username
 
         self.fields["labels"].queryset = Labels.objects.all()
