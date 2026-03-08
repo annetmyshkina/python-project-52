@@ -78,11 +78,3 @@ class UserUpdateForm(CustomUserCreationForm):
         ):
             raise forms.ValidationError(_("already exists."))
         return username
-
-
-class UserDeleteForm(forms.Form):
-    confirm = forms.BooleanField(
-        required=True,
-        label=_("I confirm this action is irreversible"),
-        widget=forms.CheckboxInput(attrs={"class": "form-check-input"}),
-    )

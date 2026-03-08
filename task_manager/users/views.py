@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from .forms import CustomUserCreationForm, UserDeleteForm, UserUpdateForm
+from .forms import CustomUserCreationForm, UserUpdateForm
 
 User = get_user_model()
 
@@ -52,7 +52,6 @@ class UserDeleteView(
     DeleteView,
 ):
     model = User
-    form_class = UserDeleteForm
     template_name = "users/user_delete.html"
     success_url = reverse_lazy("home")
     success_message = _("User has been successfully deleted")
@@ -60,9 +59,10 @@ class UserDeleteView(
     def test_func(self):
         return self.get_object() == self.request.user
 
-    def form_valid(self, form):
-        logout(self.request)
-        return super().form_valid(form)
+    def delete(self, request, *args, **kwargs):
+        response = super().delete(request, *args, **kwargs)
+        logout(request)
+        return response
 
 
 class UsersView(ListView):
