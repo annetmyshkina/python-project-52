@@ -23,7 +23,7 @@ class LabelUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = LabelForm
     template_name = "labels/label_update.html"
     success_url = reverse_lazy("labels")
-    success_message = _("Label successfully updated")
+    success_message = _("Label successfully changed")
 
 
 class LabelDeleteView(LoginRequiredMixin, DeleteView):
@@ -33,15 +33,10 @@ class LabelDeleteView(LoginRequiredMixin, DeleteView):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-
         if self.object.tasks.exists():
-            messages.warning(request, _("The label cannot be deleted"))
+            messages.error(request, _("The label cannot be deleted"))
             return redirect("labels")
-
-        messages.success(
-            request,
-            _("Label deleted successfully") % {"name": self.object.name},
-        )
+        messages.success(request, _("Label deleted successfully"))
         return self.delete(request, *args, **kwargs)
 
 

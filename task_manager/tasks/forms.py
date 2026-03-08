@@ -9,44 +9,41 @@ from .models import Tasks
 
 
 class TaskForm(forms.ModelForm):
-    labels = forms.ModelMultipleChoiceField(
-        queryset=Labels.objects.all(),
-        widget=forms.SelectMultiple(attrs={
-            "class": "form-select",
-            "size": 8,
-            "style": "height: 200px;"
-        }),
-        required=False,
-        label=_("Labels"),
-    )
-
     class Meta:
         model = Tasks
-        fields = ["name", "description", "status", "executor"]
+        fields = ["name", "description", "status", "executor", "labels"]
+        labels = {
+            "name": _("Name"),
+            "description": _("Description"),
+            "status": _("Status"),
+            "executor": _("Executor"),
+            "labels": _("Labels"),
+        }
         widgets = {
-            "name": forms.TextInput(
-                attrs={
-                    "class": "form-control",
-                    "placeholder": _("Enter task name"),
-                },
-            ),
+            "name": forms.TextInput(attrs={"class": "form-control"}),
             "description": forms.Textarea(
                 attrs={"class": "form-control", "rows": 4}
             ),
             "status": forms.Select(attrs={"class": "form-select"}),
             "executor": forms.Select(attrs={"class": "form-select"}),
+            "labels": forms.SelectMultiple(
+                attrs={
+                    "class": "form-select",
+                    "size": 8,
+                    "style": "height: 200px;",
+                }
+            ),
         }
         error_messages = {
-            "name": {
-                "unique": _("already exists"),
-            }
+            "name": {"unique": _("already exists")},
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["status"].queryset = Statuses.objects.all()
-        self.fields["status"].required = False
         self.fields["status"].empty_label = _("----")
+
         self.fields["executor"].queryset = User.objects.all()
-        self.fields["executor"].required = False
         self.fields["executor"].empty_label = _("----")
+
+        self.fields["labels"].queryset = Labels.objects.all()

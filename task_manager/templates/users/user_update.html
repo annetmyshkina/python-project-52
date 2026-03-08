@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load django_bootstrap5 i18n %}
+{% load i18n django_bootstrap5 %}
 
-{% block title %}{% trans "Registration" %} - {% trans "Task Manager" %}{% endblock %}
+{% block title %}{% trans "Update Profile" %} - {% trans "Task Manager" %}{% endblock %}
 
 {% block jumbotron %}{% endblock %}
 
@@ -10,13 +10,16 @@
     <div class="col-md-6">
         <div class="card shadow">
             <div class="card-header bg-primary text-white">
-                <h3 class="mb-0">{% trans "Registration" %}</h3>
+                <h3 class="mb-0">{% trans "Update Profile" %}</h3>
             </div>
             <div class="card-body">
                 <form method="post">
                     {% csrf_token %}
-                    {% bootstrap_form form layout='default' %}
-                    <button type="submit" class="btn btn-primary">{% trans "Register" %}</button>
+                    {% bootstrap_form form layout="horizontal" label_class="col-sm-4 col-form-label" field_class="col-sm-8" %}
+
+                    <div class="d-grid gap-2 mt-3">
+                        <button type="submit" class="btn btn-primary">{% trans "Update" %}</button>
+                    </div>
                 </form>
 
                 <div class="text-center mt-3">

@@ -9,13 +9,6 @@ class Labels(models.Model):
         unique=True,
     )
 
-    tasks = models.ManyToManyField(
-        "tasks.Tasks",
-        related_name="labels",
-        verbose_name=_("Tasks"),
-        blank=True,
-    )
-
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name=_("Created at")
     )

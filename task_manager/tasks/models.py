@@ -31,6 +31,10 @@ class Tasks(models.Model):
         verbose_name=_("Executor"),
     )
 
+    labels = models.ManyToManyField(
+        "labels.Labels", blank=True, related_name="tasks"
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name=_("Created at")
     )
@@ -42,7 +46,7 @@ class Tasks(models.Model):
     class Meta:
         verbose_name = _("Task")
         verbose_name_plural = _("Tasks")
-        ordering = ["name"]
+        ordering = ["-created_at"]
 
     def __str__(self):
         return self.name

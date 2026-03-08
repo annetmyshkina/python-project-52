@@ -27,14 +27,14 @@ class CustomUserCreationForm(UserCreationForm):
             "username": forms.TextInput(attrs={"required": True}),
         }
 
-        def save(self, commit=True):
-            user = super().save(commit=False)
-            password = self.cleaned_data.get("password1")
-            if password:
-                user.set_password(password)
-            if commit:
-                user.save()
-            return user
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        password = self.cleaned_data.get("password1")
+        if password:
+            user.set_password(password)
+        if commit:
+            user.save()
+        return user
 
 
 class UserUpdateForm(CustomUserCreationForm):

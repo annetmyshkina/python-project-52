@@ -42,6 +42,9 @@ class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("tasks")
     success_message = _("Task successfully updated")
 
+    def test_func(self):
+        return self.get_object().author == self.request.user
+
     def form_valid(self, form):
         task = form.save(commit=False)
         task.save()
@@ -57,18 +60,23 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "tasks/task_delete.html"
     success_url = reverse_lazy("tasks")
 
-    def get_object(self, queryset=None):
-        obj = super().get_object(queryset)
-        if obj.author != self.request.user:
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return super().handle_no_permission()
+
+        obj = self.get_object()
+        if obj.author != request.user:
             messages.error(
-                self.request, _("Only the task creator can delete a task")
+                request, _("Only the task creator can delete a task")
             )
             return redirect("tasks")
-        return obj
+
+        return super().dispatch(request, *args, **kwargs)
 
     def delete(self, request, *args, **kwargs):
+        response = super().delete(request, *args, **kwargs)
         messages.success(request, _("Task deleted successfully"))
-        return super().delete(request, *args, **kwargs)
+        return response
 
 
 class TaskDetailView(LoginRequiredMixin, DetailView):
