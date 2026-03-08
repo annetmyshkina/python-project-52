@@ -118,7 +118,8 @@ msgstr "Статус успешно удален"
 msgid "Description"
 msgstr "Описание"
 
-#: task_manager/tasks/forms.py:19 task_manager/tasks/models.py:31
+#: task_manager/tasks/forms.py:19
+#: task_manager/tasks/models.py:31
 #: task_manager/tasks/views.py:94
 #: task_manager/templates/tasks/task_detail.html:34
 #: task_manager/templates/tasks/tasks_list.html:22

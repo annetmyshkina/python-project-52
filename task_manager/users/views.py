@@ -48,19 +48,19 @@ class UserUpdateView(
 class UserDeleteView(
     LoginRequiredMixin,
     UserPassesTestMixin,
+    SuccessMessageMixin,
     DeleteView,
 ):
     model = User
     form_class = UserDeleteForm
     template_name = "users/user_delete.html"
     success_url = reverse_lazy("home")
+    success_message = _("User has been successfully deleted")
 
     def test_func(self):
         return self.get_object() == self.request.user
 
     def form_valid(self, form):
-        messages.success(self.request, _("User has been successfully deleted"))
-
         logout(self.request)
         return super().form_valid(form)
 
