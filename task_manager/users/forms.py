@@ -45,13 +45,22 @@ class UserUpdateForm(CustomUserCreationForm):
         self.fields["password1"].help_text = _(
             "Leave blank to keep current password"
         )
-        self.fields["password1"].help_text = _(
-            "Leave blank to keep current password"
-        )
 
         if self.instance and self.instance.pk:
             self.fields["password1"].initial = ""
             self.fields["password2"].initial = ""
+
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        if username == self.instance.username:
+            return username
+        if (
+            User.objects.filter(username=username)
+            .exclude(pk=self.instance.pk)
+            .exists()
+        ):
+            raise forms.ValidationError(_("already exists."))
+        return username
 
     def save(self, commit=True):
         user = self.instance
@@ -66,15 +75,3 @@ class UserUpdateForm(CustomUserCreationForm):
         if commit:
             user.save()
         return user
-
-    def clean_username(self):
-        username = self.cleaned_data.get("username")
-        if username == self.instance.username:
-            return username
-        if (
-            User.objects.filter(username=username)
-            .exclude(pk=self.instance.pk)
-            .exists()
-        ):
-            raise forms.ValidationError(_("already exists."))
-        return username
